@@ -5,13 +5,18 @@ import pandapower.plotting as plot
 from pandapower.plotting.plotly import pf_res_plotly
 from pandapower.plotting.plotly import simple_plotly
 import pandapower.control as ct
+
+#Initialisation of the data structure with frequency of 50 Hz and reference apparent power for per unit of 100 
 net = pp.create_empty_network(f_hz=50, sn_mva=100)
     
 vmin = 0.95
 vmax = 1.1
 load_max = 100.
 
-    
+#The buses are the node of the network 
+#vn_kv = the grid voltage level 
+#max/min _vm_pu = max and min bus voltage in pu 
+
 # list of Buses
 M1 = pp.create_bus(net, vn_kv=20.0, name="M1", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (1.5,4))
 M2 = pp.create_bus(net, vn_kv=20.0, name="M2", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (3,4))
@@ -50,6 +55,10 @@ N14 = pp.create_bus(net, vn_kv=380.0, name="N14", in_service=True, max_vm_pu=vma
 
 
 # list of Loads:
+# p_mw = The active power of the load (if >0 load else generation)
+# q_mvar = The reactive power of the load
+# max_p_mw = Maximum active power load - necessary for controllable loads in for OPF
+# max_q_mvar = Maximum reactive power load - necessary for controllable loads in for OPF
 LOAD_M1 = pp.create_load(net, bus=M1, p_mw=50.0, q_mvar=40.0, name="M1", in_service=True, max_p_mw=50., min_p_mw=50.0, max_q_mvar=40., min_q_mvar=40., controllable = True)
 LOAD_M2 = pp.create_load(net, bus=M2, p_mw=50.0, q_mvar=40.0, name="M2", in_service=True, max_p_mw=50.0, min_p_mw=50.0, max_q_mvar=40., min_q_mvar=40., controllable = True)
 LOAD_N11 = pp.create_load(net, bus=N11, p_mw=100.0, q_mvar=30.0, name="N11", in_service=True, max_p_mw=100., min_p_mw=100., max_q_mvar=30., min_q_mvar=30., controllable = True)
@@ -68,6 +77,7 @@ LOAD_N204 = pp.create_load(net, bus=N204, p_mw=360.0, q_mvar=180.0, name="N204",
 
 
 # List of Shunts:
+# q_mvar = shunt susceptance in MVAr at v= 1.0 p.u
 pp.create_shunt(net, bus=N104, q_mvar=-75.0, in_service=True)
 pp.create_shunt(net, bus=N203, q_mvar=-45.0, in_service=True)
 pp.create_shunt(net, bus=N206, q_mvar=-45.0, in_service=True)
@@ -83,6 +93,13 @@ pp.create_shunt(net, bus=N204, q_mvar=-45.0, in_service=True)
 
 
 # list of Lines
+#Create a line element in the net
+# r_ohm = line resistance in ohm per km
+# x_ohm = line reactance in ohm per km
+# max_i_ka = maximum thermal current in kilo Ampere
+# c_nf_per_km = line capacitance (line-to-earth) in nano Farad per km
+# max_loading_percent = maximum current loading (only needed for OPF)
+
 pp.create_line_from_parameters(net, from_bus= N11, to_bus= N10, name="'N11N10", length_km=1, r_ohm_per_km=1.141, x_ohm_per_km=12.086, max_i_ka=2.157467, c_nf_per_km=434.703079165756, in_service=True,max_loading_percent = load_max , controllable = True, geodata = [(0,-4),(1,-4)])
 pp.create_line_from_parameters(net, from_bus= N6, to_bus= N8, name="'N6N8", length_km=1, r_ohm_per_km=1.444, x_ohm_per_km=14.44, max_i_ka=2.157467, c_nf_per_km=537.867313277922, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(0.5,-3)])
 pp.create_line_from_parameters(net, from_bus= N6, to_bus= N9, name="'N6N9", length_km=1, r_ohm_per_km=1.357, x_ohm_per_km=14.368, max_i_ka=2.157467, c_nf_per_km=538.306580920856, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(1,-3)])
@@ -108,6 +125,21 @@ pp.create_line_from_parameters(net, from_bus= N13, to_bus= N14, name="'N13N14", 
 pp.create_line_from_parameters(net, from_bus= N11, to_bus= N12, name="'N11N12", length_km=1, r_ohm_per_km=1.819, x_ohm_per_km=19.22, max_i_ka=2.051113, c_nf_per_km=597.384895796567, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(0,-4),(0,-3)])
 
 # list of Transformers:
+# lv_bus = The bus on the low-voltage side on which the transformer will be connected to
+# hv_bus = The bus on the high-voltage side on which the transformer will be connected to
+# sn_mva = rated apparent power
+# shift_degree = Angle shift over the transformer
+# vn_hv_kv = rated voltage on high voltage side
+# vk_percent = relative short-circuit voltage
+# vkr_percent = real part of relative short-circuit voltage
+# pfe_kw =  iron losses in kW
+# i0_percent = open loop losses in percent of rated current
+# tap_max = maximal allowed tap position
+# tap_step_percent = tap step size for voltage magnitude in percent
+# tap_pos = current tap position of the transformer. Defaults to the medium position (tap_neutral)
+# tap_neutral = tap position where the transformer ratio is equal to the ratio of the rated voltages
+# tap_side = position of tap changer (“hv”, “lv”)
+# max_loading_percent (float) - maximum current loading (only needed for OPF)
 pp.create_transformer_from_parameters(net, hv_bus=N2, lv_bus=N107, sn_mva=550.0, name='N2N107', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.312, vk_percent=22.72114224681497, pfe_kw=0, i0_percent=0.0, tap_min=8, tap_max=8, tap_step_percent=1, tap_pos=8,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N3, lv_bus=N101, sn_mva=550.0, name='N3N101', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.26, vk_percent=22.621494203522456, pfe_kw=0, i0_percent=0.0, tap_min=3, tap_max=3, tap_step_percent=1, tap_pos=3,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N7, lv_bus=N105, sn_mva=550.0, name='N7N105', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.26, vk_percent=22.621494203522456, pfe_kw=0, i0_percent=0.0, tap_min=7, tap_max=7, tap_step_percent=1, tap_pos=7,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
@@ -129,6 +161,12 @@ pp.create_transformer_from_parameters(net, hv_bus=N106, lv_bus=N206, sn_mva=500.
 pp.create_transformer_from_parameters(net, hv_bus=N107, lv_bus=N207, sn_mva=500.0, name="'N207N107'", vn_hv_kv=150.0, vn_lv_kv=15.0, vkr_percent=0.277, vk_percent=11.53832544176147, pfe_kw=0, i0_percent=0.0, tap_pos=0, tap_neutral=0, tap_step_percent=1.0, tap_side="lv", tap_min=-4, tap_max=20, in_service=True,max_loading_percent = load_max)
 
 # list of Generators:
+# p_mw = The active power of the generator (positive for generation!)
+# max_q_mvar = Maximum reactive power injection - necessary for OPF
+# sn_mva = Nominal power of the generator
+# vm_pu = The voltage set point of the generator.
+# slack_weight = Contribution factor for distributed slack power flow calculation (active power balancing)
+# max_p_mw = Maximum active power injection - necessary for OPF
 G1 = pp.create_gen(net, p_mw=700.0, max_q_mvar=638.58, min_q_mvar=-250.0, sn_mva=1000.0, bus=M1, vm_pu=0.99958, name="M1", slack=False, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
 G2 = pp.create_gen(net, p_mw=600.0, max_q_mvar=696.53, min_q_mvar=-250.0, sn_mva=1000.0, bus=M2, vm_pu=0.99958, name="M2", slack=False, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
 G3=pp.create_gen(net, p_mw=375.0, max_q_mvar=220.83, min_q_mvar=-50.0, sn_mva=450.00, bus=M3, vm_pu=0.99000, name="M3", slack=False, in_service=True, min_p_mw=0., max_p_mw=405., controllable = True)
@@ -139,6 +177,11 @@ G7=pp.create_gen(net, p_mw=255.0, max_q_mvar=9999.0, min_q_mvar=-999.0, sn_mva=1
 G8=pp.create_gen(net, p_mw=174.0, max_q_mvar=9999.0, min_q_mvar=-999.0, sn_mva=1000.0, bus=N14, vm_pu=1.0929, name="N14", slack=False, in_service=True, min_p_mw=0., max_p_mw=2450., controllable = True)
 
 # Controllers :
+# Trafo Controller with local tap changer voltage control.
+# tid (int) = ID of the trafo that is controlled
+# vm_lower_pu (float) = Lower voltage limit in pu
+# vm_upper_pu (float) - Upper voltage limit in pu
+# 
 ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,12, 1.01,1.021, order = 0)
 ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,13, 1.01,1.021, order = 0)
 ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,14, 1.01,1.021, order = 0)
@@ -157,3 +200,7 @@ Launch the AC Power Flow routine here
 Display the results you need
 
 """
+# Runs the power flow on the net
+# Algorithm used is the newton Raphson 
+
+pp.runpp(net,algorithm='nr')
