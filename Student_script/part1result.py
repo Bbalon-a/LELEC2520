@@ -6,7 +6,7 @@ from pandapower.plotting.plotly import pf_res_plotly
 from pandapower.plotting.plotly import simple_plotly
 import pandapower.control as ct
 
-#Initialisation of the data structure with frequency of 50 Hz and reference apparent power for per unit of 100 
+#Initialisation of the data structure with frequency of 50 Hz and reference apparent power 
 net = pp.create_empty_network(f_hz=50, sn_mva=100)
     
 vmin = 0.95
@@ -42,8 +42,8 @@ N107 = pp.create_bus(net, vn_kv=150.0, name="N107", in_service=True, max_vm_pu=v
 N207 = pp.create_bus(net, vn_kv=15.0, name="N207", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (8,0))
 N204 = pp.create_bus(net, vn_kv=15.0, name="N204", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (5,0))
 N12 = pp.create_bus(net, vn_kv=380.0, name="N12", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (0,-3))
-N6 = pp.create_bus(net, vn_kv=380.0, name="N6", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (1.5,-1))
-N4 = pp.create_bus(net, vn_kv=380.0, name="N4", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (2.5,2))
+N6 = pp.create_bus(net, vn_kv=380.0, name="N6", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (1.5,-1)) #24
+N4 = pp.create_bus(net, vn_kv=380.0, name="N4", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (2.5,2)) #25
 N7 = pp.create_bus(net, vn_kv=380.0, name="N7", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (4.5,-1))
 N1 = pp.create_bus(net, vn_kv=380.0, name="N1", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (2.5,3))
 N2 = pp.create_bus(net, vn_kv=380.0, name="N2", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (8,2))
@@ -103,7 +103,7 @@ pp.create_shunt(net, bus=N204, q_mvar=-45.0, in_service=True)
 pp.create_line_from_parameters(net, from_bus= N11, to_bus= N10, name="'N11N10", length_km=1, r_ohm_per_km=1.141, x_ohm_per_km=12.086, max_i_ka=2.157467, c_nf_per_km=434.703079165756, in_service=True,max_loading_percent = load_max , controllable = True, geodata = [(0,-4),(1,-4)])
 pp.create_line_from_parameters(net, from_bus= N6, to_bus= N8, name="'N6N8", length_km=1, r_ohm_per_km=1.444, x_ohm_per_km=14.44, max_i_ka=2.157467, c_nf_per_km=537.867313277922, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(0.5,-3)])
 pp.create_line_from_parameters(net, from_bus= N6, to_bus= N9, name="'N6N9", length_km=1, r_ohm_per_km=1.357, x_ohm_per_km=14.368, max_i_ka=2.157467, c_nf_per_km=538.306580920856, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(1,-3)])
-pp.create_line_from_parameters(net, from_bus= N6, to_bus= N4, name="'N6N4", length_km=1, r_ohm_per_km=1.213, x_ohm_per_km=10.224, max_i_ka=2.157467, c_nf_per_km=380.915074598419, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(1.5,1.5),(2.5,2)])
+pp.create_line_from_parameters(net, from_bus= N6, to_bus= N4, name="'N6N4", length_km=1, r_ohm_per_km=1.213, x_ohm_per_km=10.224, max_i_ka=2.157467, c_nf_per_km=380.915074598419, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(1.5,1.5),(2.5,2)]) #3
 pp.create_line_from_parameters(net, from_bus= N6, to_bus= N7, name="'N6N7", length_km=1, r_ohm_per_km=1.213, x_ohm_per_km=10.224, max_i_ka=2.157467, c_nf_per_km=380.915074598419, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(4.5,-1)])
 pp.create_line_from_parameters(net, from_bus= N8, to_bus= N10, name="'N8N10", length_km=1, r_ohm_per_km=2.166, x_ohm_per_km=23.104, max_i_ka=2.157467, c_nf_per_km=881.718384729100, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(0.5,-3),(1,-4)])
 pp.create_line_from_parameters(net, from_bus= N9, to_bus= N10, name="'N9N10", length_km=1, r_ohm_per_km=2.166, x_ohm_per_km=23.104, max_i_ka=2.157467, c_nf_per_km=881.718384729100, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1,-3),(1,-4)])
@@ -203,4 +203,14 @@ Display the results you need
 # Runs the power flow on the net
 # Algorithm used is the newton Raphson 
 
-pp.runpp(net,algorithm='nr')
+pp.runpp(net,algorithm='nr',init='flat')
+print(net.res_bus.p_mw)
+print(net.res_line.p_from_mw)
+print("Voltage Magnitude of N4 in p.u. = ",net.res_bus.vm_pu[25])
+print("Voltage angle of N4 in degree = ",net.res_bus.va_degree[25])
+print("Resulting active power of N4 in MW = ",net.res_line.p_to_mw[3])
+print("Resulting reactive power of N4 in MVar = ",net.res_line.q_to_mvar[3])
+print("Voltage Magnitude of N6 in p.u. =",net.res_bus.vm_pu[26])
+print("Voltage angle of N6 in degree =",net.res_bus.va_degree[26])
+print("Resulting active power of N4 in MW = ",net.res_line.p_from_mw[3])
+print("Resulting reactive power of N4 in MVar = ",net.res_line.q_from_mvar[3])
