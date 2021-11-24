@@ -41,7 +41,7 @@ N101 = pp.create_bus(net, vn_kv=150.0, name="N101", in_service=True, max_vm_pu=v
 N201 = pp.create_bus(net, vn_kv=15.0, name="N201", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (1,0))
 N107 = pp.create_bus(net, vn_kv=150.0, name="N107", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (8,1))
 N207 = pp.create_bus(net, vn_kv=15.0, name="N207", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (8,0))
-N204 = pp.create_bus(net, vn_kv=15.0, name="N204", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (5,0))
+N204 = pp.create_bus(net, vn_kv=15.0, name="N204", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (5,0))#22
 N12 = pp.create_bus(net, vn_kv=380.0, name="N12", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (0,-3))
 N6 = pp.create_bus(net, vn_kv=380.0, name="N6", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (1.5,-1)) #24
 N4 = pp.create_bus(net, vn_kv=380.0, name="N4", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (2.5,2)) #25
@@ -49,9 +49,9 @@ N7 = pp.create_bus(net, vn_kv=380.0, name="N7", in_service=True, max_vm_pu=vmax,
 N1 = pp.create_bus(net, vn_kv=380.0, name="N1", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (2.5,3))
 N2 = pp.create_bus(net, vn_kv=380.0, name="N2", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (8,2))
 N3 = pp.create_bus(net, vn_kv=380.0, name="N3", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (0.5,2))
-N5 = pp.create_bus(net, vn_kv=380.0, name="N5", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (6,2))
+N5 = pp.create_bus(net, vn_kv=380.0, name="N5", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (6,2))#30
 N103 = pp.create_bus(net, vn_kv=150.0, name="N103", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (4.5,1))
-N106 = pp.create_bus(net, vn_kv=150.0, name="N106", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (6,1))
+N106 = pp.create_bus(net, vn_kv=150.0, name="N106", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (6,1))#32
 N14 = pp.create_bus(net, vn_kv=380.0, name="N14", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (6,-4))
 
 
@@ -72,7 +72,7 @@ LOAD_N202 = pp.create_load(net, bus=N202, p_mw=360.0, q_mvar=180.0, name="N202",
 LOAD_N205 = pp.create_load(net, bus=N205, p_mw=360.0, q_mvar=180.0, name="N205", in_service=True, max_p_mw=360., min_p_mw=360., max_q_mvar=180., min_q_mvar=180., controllable = True)
 LOAD_N201 = pp.create_load(net, bus=N201, p_mw=360.0, q_mvar=180.0, name="N201", in_service=True, max_p_mw=360., min_p_mw=360., max_q_mvar=180., min_q_mvar=180., controllable = True)
 LOAD_N207 = pp.create_load(net, bus=N207, p_mw=360.0, q_mvar=180.0, name="N207", in_service=True, max_p_mw=360., min_p_mw=360., max_q_mvar=180., min_q_mvar=180., controllable = True)
-LOAD_N204 = pp.create_load(net, bus=N204, p_mw=360.0, q_mvar=180.0, name="N204", in_service=True, max_p_mw=360., min_p_mw=360., max_q_mvar=180., min_q_mvar=180., controllable = True)
+LOAD_N204 = pp.create_load(net, bus=N204, p_mw=360.0, q_mvar=180.0, name="N204", in_service=True, max_p_mw=360., min_p_mw=360., max_q_mvar=180., min_q_mvar=180., controllable = True)#12
 
 
 
@@ -90,7 +90,7 @@ pp.create_shunt(net, bus=N101, q_mvar=-75.0, in_service=True)
 pp.create_shunt(net, bus=N201, q_mvar=-45.0, in_service=True)
 pp.create_shunt(net, bus=N107, q_mvar=-75.0, in_service=True)
 pp.create_shunt(net, bus=N207, q_mvar=-45.0, in_service=True)
-pp.create_shunt(net, bus=N204, q_mvar=-45.0, in_service=True)
+pp.create_shunt(net, bus=N204, q_mvar=-45.0, in_service=True)#11
 
 
 # list of Lines
@@ -145,7 +145,7 @@ pp.create_transformer_from_parameters(net, hv_bus=N2, lv_bus=N107, sn_mva=550.0,
 pp.create_transformer_from_parameters(net, hv_bus=N3, lv_bus=N101, sn_mva=550.0, name='N3N101', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.26, vk_percent=22.621494203522456, pfe_kw=0, i0_percent=0.0, tap_min=3, tap_max=3, tap_step_percent=1, tap_pos=3,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N7, lv_bus=N105, sn_mva=550.0, name='N7N105', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.26, vk_percent=22.621494203522456, pfe_kw=0, i0_percent=0.0, tap_min=7, tap_max=7, tap_step_percent=1, tap_pos=7,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N4, lv_bus=N102, sn_mva=550.0, name='N4N102', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.416, vk_percent=24.542525888750735, pfe_kw=0, i0_percent=0.0, tap_min=14, tap_max=14, tap_step_percent=1, tap_pos=14,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
-pp.create_transformer_from_parameters(net, hv_bus=N5, lv_bus=N106, sn_mva=550.0, name='N5N106', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.151, vk_percent=11.596983099065032, pfe_kw=0, i0_percent=0.0, tap_min=6, tap_max=6, tap_step_percent=1, tap_pos=6,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
+pp.create_transformer_from_parameters(net, hv_bus=N5, lv_bus=N106, sn_mva=550.0, name='N5N106', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.151, vk_percent=11.596983099065032, pfe_kw=0, i0_percent=0.0, tap_min=6, tap_max=6, tap_step_percent=1, tap_pos=6,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)#4
 pp.create_transformer_from_parameters(net, hv_bus=N6, lv_bus=N104, sn_mva=550.0, name='N6N104', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.146, vk_percent=11.440931605424446, pfe_kw=0, i0_percent=0.0, tap_min=2, tap_max=2, tap_step_percent=1, tap_pos=2,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N1, lv_bus=M1, sn_mva=1000.0, name='M1N1', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=20.0, vkr_percent=0.23, vk_percent=10.702471677140752, pfe_kw=0, i0_percent=0.0, tap_min=8, tap_max=8, tap_step_percent=1, tap_pos=8,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N1, lv_bus=M2, sn_mva=1000.0, name='M2N1', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=20.0, vkr_percent=0.117, vk_percent=9.854694566550501, pfe_kw=0, i0_percent=0.0, tap_min=6, tap_max=6, tap_step_percent=1, tap_pos=6,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
@@ -182,7 +182,7 @@ G8=pp.create_gen(net, p_mw=174.0, max_q_mvar=9999.0, min_q_mvar=-999.0, sn_mva=1
 # tid (int) = ID of the trafo that is controlled
 # vm_lower_pu (float) = Lower voltage limit in pu
 # vm_upper_pu (float) - Upper voltage limit in pu
-# 
+
 ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,12, 1.01,1.021, order = 0)
 ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,13, 1.01,1.021, order = 0)
 ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,14, 1.01,1.021, order = 0)
@@ -209,12 +209,15 @@ Display the results you need
 
 
 
-pp.runpp(net,algorithm='nr',init='flat')
+pp.runpp(net,algorithm='nr',init='flat',trafo_model='pi')
+
 #Information on our line 
 Snom = net.sn_mva*10**6
 line_num =3
 bus_numFrom =24
 bus_numTo =25
+trafo_num = 4
+###############################################################
 #Q1
 R = net.line.r_ohm_per_km[line_num]
 XL = net.line.x_ohm_per_km[line_num]
@@ -236,21 +239,90 @@ SN6 = 3*VN6*np.conjugate(IN6)
 SN4 = 3*VN4*np.conjugate(IN4)
 
 
+###############################################################
 #Q2 
 Sloss = SN6+SN4
 Ploss = np.real(Sloss)
 Qloss = np.imag(Sloss)
 
+###############################################################
 #Q3 
 Zc = np.sqrt(Z*(1.j*XC))
 Sn = Vg_nom**2/ np.conjugate(Zc)
 
+###############################################################
 #Q4 
 IN6_max = Snom /(np.sqrt(3)*np.abs(VN6))
 IN4_max = Snom /(np.sqrt(3)*np.abs(VN4))
 
 percentageI6 = np.abs(IN6)/IN6_max
 percentageI4 = np.abs(IN4)/IN4_max
+
+###############################################################
+#Q5
+##Not working 
+St_nom = net.trafo.sn_mva[trafo_num]
+anglet = net.trafo.shift_degree[trafo_num]
+
+n = net.trafo.vn_hv_kv[trafo_num]/net.trafo.vn_lv_kv[trafo_num] *net.trafo.lv_bus[trafo_num]/net.trafo.hv_bus[trafo_num]
+
+zk = net.trafo.vk_percent[trafo_num]/100 * Snom/St_nom
+rk = net.trafo.vkr_percent[trafo_num] /100 * Snom/St_nom
+xk = np.sqrt(zk**2 - rk**2)
+
+Rtransfo = net.trafo.vkr_percent[trafo_num] /100 
+Ztransfo = net.trafo.vk_percent[trafo_num]  /100
+Xtransfo = np.sqrt(Ztransfo**2- Rtransfo**2)
+#print(n)
+#print(Rtransfo)
+#print(Xtransfo)
+
+tra_num = 4
+VHphase = np.cos(net.res_trafo.va_hv_degree[tra_num]/180*np.pi) + 1.j * np.sin(net.res_trafo.va_hv_degree[tra_num]/180*np.pi)
+VLphase = np.cos(net.res_trafo.va_lv_degree[tra_num]/180*np.pi) + 1.j * np.sin(net.res_trafo.va_lv_degree[tra_num]/180*np.pi)
+VHmagpu = net.res_trafo.vm_hv_pu[tra_num]
+VLmagpu = net.res_trafo.vm_lv_pu[tra_num]
+#N5 high voltage and N106 low voltage 
+High_num = 30
+Low_num = 32 
+
+VN5ref = net.bus.vn_kv[High_num] *10**3
+VN106ref = net.bus.vn_kv[Low_num] *10**3
+VN5pu =  VHmagpu * VHphase
+VN106pu =  VLmagpu * VLphase
+Zeqpu = Rtransfo +1.j*Xtransfo
+
+IN5pu = 1/Zeqpu * VN5pu - 1/(n*Zeqpu) * VN106pu
+IN106pu = -1/(n*Zeqpu) * VN5pu + 1/(n**2 * Zeqpu) * VN106pu
+
+SN5 = VN5pu * np.conjugate(IN5pu) * VN5ref
+SN106 = VN106pu * np.conjugate(IN106pu) * VN106ref
+#print(SN5/10**6, SN6/10**6)
+#print(net.res_trafo.p_hv_mw[tra_num],net.res_trafo.q_hv_mvar[tra_num])
+#print(net.res_trafo.p_lv_mw[tra_num],net.res_trafo.q_lv_mvar[tra_num])
+
+
+###############################################################
+#Q8 
+
+shunt_num =11
+load_num =12
+QNshunt = net.shunt.q_mvar[shunt_num] *10**6
+
+
+U204pu = net.res_bus.vm_pu[22]
+Qshunt = U204pu**2 * QNshunt
+
+Pload = net.load.p_mw[load_num] *10**6
+Qload = net.load.q_mvar[load_num] *10**6
+fpwithoutshunt = Pload /np.sqrt(Pload**2 +Qload*2)
+
+
+fpwithshunt = Pload/(np.sqrt(Pload**2 +(Qload-Qshunt)**2))
+
+Qshuntsimu = net.res_shunt.q_mvar[shunt_num] *10**6
+fpwithshuntsimu = Pload/(np.sqrt(Pload**2 +(Qload-Qshuntsimu)**2))
+
 
 print("-------------------------------------------------------")
 print("Q1.1")
@@ -277,3 +349,17 @@ print("Q1.4")
 print("Maximum current from N6 = {:.4f} [A], ratio IN6/IN6_max = {:.2f}%".format(IN6_max,percentageI6*100))
 print("Maximum current from N4 = {:.4f} [A], ratio IN4/IN4_max = {:.2f}%".format(IN4_max,percentageI4*100))
 print("-------------------------------------------------------")
+print("-------------------------------------------------------")
+print("-------------------------------------------------------")
+print("-------------------------------------------------------")
+print("Q1.8")
+print("Without shunt compensation")
+print("Q_shunt = 0, fp = {:.4f}".format(fpwithoutshunt))
+print("With shunt compensation")
+print("Theoritical results:")
+print("Q_shunt = {:.4f} MVAr, fp = {:.4f}".format(Qshunt/10**6,fpwithshunt))
+print("Simulation results:")
+print("Q_shunt = {:.4f} MVAr, fp = {:.4f}".format(Qshuntsimu/10**6,fpwithshuntsimu))
+
+
+
