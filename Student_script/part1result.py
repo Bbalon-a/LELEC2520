@@ -5,6 +5,7 @@ import pandapower.plotting as plot
 from pandapower.plotting.plotly import pf_res_plotly
 from pandapower.plotting.plotly import simple_plotly
 import pandapower.control as ct
+import numpy as np
 
 #Initialisation of the data structure with frequency of 50 Hz and reference apparent power 
 net = pp.create_empty_network(f_hz=50, sn_mva=100)
@@ -203,14 +204,60 @@ Display the results you need
 # Runs the power flow on the net
 # Algorithm used is the newton Raphson 
 
+
+
+
+
+
 pp.runpp(net,algorithm='nr',init='flat')
-print(net.res_bus.p_mw)
-print(net.res_line.p_from_mw)
-print("Voltage Magnitude of N4 in p.u. = ",net.res_bus.vm_pu[25])
-print("Voltage angle of N4 in degree = ",net.res_bus.va_degree[25])
-print("Resulting active power of N4 in MW = ",net.res_line.p_to_mw[3])
-print("Resulting reactive power of N4 in MVar = ",net.res_line.q_to_mvar[3])
-print("Voltage Magnitude of N6 in p.u. =",net.res_bus.vm_pu[26])
-print("Voltage angle of N6 in degree =",net.res_bus.va_degree[26])
-print("Resulting active power of N4 in MW = ",net.res_line.p_from_mw[3])
-print("Resulting reactive power of N4 in MVar = ",net.res_line.q_from_mvar[3])
+#Q1
+R = 1.213 
+XL = 10.224
+XC = 1/(2*np.pi*50*380.915074598419*10**(-9))
+Vg = 380000
+Vg_nom = Vg/np.sqrt(3)
+Z = R + 1.j * XL
+
+VN6phase = np.cos(net.res_line.va_from_degree[3]/180*np.pi) + 1.j * np.sin(net.res_line.va_from_degree[3]/180*np.pi)
+VN4phase = np.cos(net.res_line.va_to_degree[3]/180*np.pi) + 1.j * np.sin(net.res_line.va_to_degree[3]/180*np.pi)
+
+VN6 = net.res_line.vm_from_pu[3] * Vg_nom * VN6phase 
+VN4 = net.res_line.vm_to_pu[3] * Vg_nom * VN4phase 
+
+IN6 = VN6/(-1.j*XC/2) + (VN6 - VN4)/Z
+IN4 = VN4/(-1.j*XC/2) + (VN4 - VN6)/Z
+
+SN6 = 3*VN6*np.conjugate(IN6)/10**6
+SN4 = 3*VN4*np.conjugate(IN4)/10**6
+
+
+#Q2 
+Sloss = SN6+SN4
+Ploss = np.real(Sloss)
+Qloss = np.imag(Sloss)
+
+#Q3 
+Zc = np.sqrt(Z*(1.j*XC))
+Sn = Vg_nom**2/ np.conjugate(Zc)
+
+
+print("-------------------------------------------------------")
+print("Q1.1")
+print("Theoritical Results:")
+print("Active power of node N6 = {:.4f} MW, Reactive power of node N6 = {:.4f} MVar".format(np.real(SN6),np.imag(SN6)))
+print("Active power of node N4 = {:.4f} MW, Reactive power of node N4 = {:.4f} MVar".format(np.real(SN4),np.imag(SN4)))
+print("Simulation Results:")
+print("Active power of node N6 = {:.4f} MW, Reactive power of node N6 = {:.4f} MVar".format(net.res_line.p_from_mw[3],net.res_line.q_from_mvar[3]))
+print("Active power of node N4 = {:.4f} MW, Reactive power of node N4 = {:.4f} MVar".format(net.res_line.p_to_mw[3],net.res_line.q_to_mvar[3]))
+print("-------------------------------------------------------")
+print("Q1.2")
+print("Theoritical Results:")
+print("Resistive losses = {:.4f} MW".format(Ploss))
+print("Reactive losses = {:.4f} MVar".format(Qloss))
+print("Simulation Results:")
+print("Resistive losses = {:.4f} MW".format(net.res_line.pl_mw[3]))
+print("Reactive losses = {:.4f} MVar".format(net.res_line.ql_mvar[3]))
+print("-------------------------------------------------------")
+print("Q1.3")
+print("The surge impedance Z_c = {:.4f} \u03A9".format(Zc))
+print("The surge impedance loading = {:.4f} < {:.4f}° MVA".format(np.abs(Sn)/10**6,np.angle(Sn)*180/np.pi))
