@@ -210,25 +210,30 @@ Display the results you need
 
 
 pp.runpp(net,algorithm='nr',init='flat')
+#Information on our line 
+Snom = net.sn_mva*10**6
+line_num =3
+bus_numFrom =24
+bus_numTo =25
 #Q1
-R = 1.213 
-XL = 10.224
-XC = 1/(2*np.pi*50*380.915074598419*10**(-9))
-Vg = 380000
+R = net.line.r_ohm_per_km[line_num]
+XL = net.line.x_ohm_per_km[line_num]
+XC = 1/(2*np.pi*50*net.line.c_nf_per_km[line_num]*10**(-9))
+Vg = net.bus.vn_kv[24]*10**3
 Vg_nom = Vg/np.sqrt(3)
 Z = R + 1.j * XL
 
-VN6phase = np.cos(net.res_line.va_from_degree[3]/180*np.pi) + 1.j * np.sin(net.res_line.va_from_degree[3]/180*np.pi)
-VN4phase = np.cos(net.res_line.va_to_degree[3]/180*np.pi) + 1.j * np.sin(net.res_line.va_to_degree[3]/180*np.pi)
+VN6phase = np.cos(net.res_line.va_from_degree[line_num]/180*np.pi) + 1.j * np.sin(net.res_line.va_from_degree[line_num]/180*np.pi)
+VN4phase = np.cos(net.res_line.va_to_degree[line_num]/180*np.pi) + 1.j * np.sin(net.res_line.va_to_degree[line_num]/180*np.pi)
 
-VN6 = net.res_line.vm_from_pu[3] * Vg_nom * VN6phase 
-VN4 = net.res_line.vm_to_pu[3] * Vg_nom * VN4phase 
+VN6 = net.res_line.vm_from_pu[line_num] * Vg_nom * VN6phase 
+VN4 = net.res_line.vm_to_pu[line_num] * Vg_nom * VN4phase 
 
 IN6 = VN6/(-1.j*XC/2) + (VN6 - VN4)/Z
 IN4 = VN4/(-1.j*XC/2) + (VN4 - VN6)/Z
 
-SN6 = 3*VN6*np.conjugate(IN6)/10**6
-SN4 = 3*VN4*np.conjugate(IN4)/10**6
+SN6 = 3*VN6*np.conjugate(IN6)
+SN4 = 3*VN4*np.conjugate(IN4)
 
 
 #Q2 
@@ -240,24 +245,35 @@ Qloss = np.imag(Sloss)
 Zc = np.sqrt(Z*(1.j*XC))
 Sn = Vg_nom**2/ np.conjugate(Zc)
 
+#Q4 
+IN6_max = Snom /(np.sqrt(3)*np.abs(VN6))
+IN4_max = Snom /(np.sqrt(3)*np.abs(VN4))
+
+percentageI6 = np.abs(IN6)/IN6_max
+percentageI4 = np.abs(IN4)/IN4_max
 
 print("-------------------------------------------------------")
 print("Q1.1")
 print("Theoritical Results:")
-print("Active power of node N6 = {:.4f} MW, Reactive power of node N6 = {:.4f} MVar".format(np.real(SN6),np.imag(SN6)))
-print("Active power of node N4 = {:.4f} MW, Reactive power of node N4 = {:.4f} MVar".format(np.real(SN4),np.imag(SN4)))
+print("Active power of node N6 = {:.4f} MW, Reactive power of node N6 = {:.4f} MVar".format(np.real(SN6)/10**6,np.imag(SN6)/10**6))
+print("Active power of node N4 = {:.4f} MW, Reactive power of node N4 = {:.4f} MVar".format(np.real(SN4)/10**6,np.imag(SN4)/10**6))
 print("Simulation Results:")
-print("Active power of node N6 = {:.4f} MW, Reactive power of node N6 = {:.4f} MVar".format(net.res_line.p_from_mw[3],net.res_line.q_from_mvar[3]))
-print("Active power of node N4 = {:.4f} MW, Reactive power of node N4 = {:.4f} MVar".format(net.res_line.p_to_mw[3],net.res_line.q_to_mvar[3]))
+print("Active power of node N6 = {:.4f} MW, Reactive power of node N6 = {:.4f} MVar".format(net.res_line.p_from_mw[line_num],net.res_line.q_from_mvar[line_num]))
+print("Active power of node N4 = {:.4f} MW, Reactive power of node N4 = {:.4f} MVar".format(net.res_line.p_to_mw[line_num],net.res_line.q_to_mvar[line_num]))
 print("-------------------------------------------------------")
 print("Q1.2")
 print("Theoritical Results:")
-print("Resistive losses = {:.4f} MW".format(Ploss))
-print("Reactive losses = {:.4f} MVar".format(Qloss))
+print("Resistive losses = {:.4f} MW".format(Ploss/10**6))
+print("Reactive losses = {:.4f} MVar".format(Qloss/10**6))
 print("Simulation Results:")
-print("Resistive losses = {:.4f} MW".format(net.res_line.pl_mw[3]))
-print("Reactive losses = {:.4f} MVar".format(net.res_line.ql_mvar[3]))
+print("Resistive losses = {:.4f} MW".format(net.res_line.pl_mw[line_num]))
+print("Reactive losses = {:.4f} MVar".format(net.res_line.ql_mvar[line_num]))
 print("-------------------------------------------------------")
 print("Q1.3")
 print("The surge impedance Z_c = {:.4f} \u03A9".format(Zc))
 print("The surge impedance loading = {:.4f} < {:.4f}° MVA".format(np.abs(Sn)/10**6,np.angle(Sn)*180/np.pi))
+print("-------------------------------------------------------")
+print("Q1.4")
+print("Maximum current from N6 = {:.4f} [A], ratio IN6/IN6_max = {:.2f}%".format(IN6_max,percentageI6*100))
+print("Maximum current from N4 = {:.4f} [A], ratio IN4/IN4_max = {:.2f}%".format(IN4_max,percentageI4*100))
+print("-------------------------------------------------------")
