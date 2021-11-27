@@ -24,16 +24,16 @@ N8 = pp.create_bus(net, vn_kv=380.0, name="N8", in_service=True, max_vm_pu=vmax,
 N9 = pp.create_bus(net, vn_kv=380.0, name="N9", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (1,-3))
 N10 = pp.create_bus(net, vn_kv=380.0, name="N10", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (1,-4))
 N13 = pp.create_bus(net, vn_kv=380.0, name="N13", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (5,-4))
-N104 = pp.create_bus(net, vn_kv=150.0, name="N104", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (2,-2))
+N104 = pp.create_bus(net, vn_kv=150.0, name="N104", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (2,-2))    #Q3.3
 N203 = pp.create_bus(net, vn_kv=15.0, name="N203", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (2,-3))
 N206 = pp.create_bus(net, vn_kv=15.0, name="N206", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (6,0))
-N102 = pp.create_bus(net, vn_kv=150.0, name="N102", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (2,1))
+N102 = pp.create_bus(net, vn_kv=150.0, name="N102", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (2,1))     #Q3.3
 N202 = pp.create_bus(net, vn_kv=15.0, name="N202", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (2,0))
-N105 = pp.create_bus(net, vn_kv=150.0, name="N105", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (5,-2))
+N105 = pp.create_bus(net, vn_kv=150.0, name="N105", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (5,-2))    #Q3.3
 N205 = pp.create_bus(net, vn_kv=15.0, name="N205", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (5.5,-3))
-N101 = pp.create_bus(net, vn_kv=150.0, name="N101", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (0.5,1))
+N101 = pp.create_bus(net, vn_kv=150.0, name="N101", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (0.5,1))   #Q3.3
 N201 = pp.create_bus(net, vn_kv=15.0, name="N201", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (1,0))
-N107 = pp.create_bus(net, vn_kv=150.0, name="N107", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (8,1))
+N107 = pp.create_bus(net, vn_kv=150.0, name="N107", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (8,1))     #Q3.3
 N207 = pp.create_bus(net, vn_kv=15.0, name="N207", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (8,0))
 N204 = pp.create_bus(net, vn_kv=15.0, name="N204", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (5,0))
 N12 = pp.create_bus(net, vn_kv=380.0, name="N12", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (0,-3))
@@ -44,8 +44,8 @@ N1 = pp.create_bus(net, vn_kv=380.0, name="N1", in_service=True, max_vm_pu=vmax,
 N2 = pp.create_bus(net, vn_kv=380.0, name="N2", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (8,2))
 N3 = pp.create_bus(net, vn_kv=380.0, name="N3", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (0.5,2))
 N5 = pp.create_bus(net, vn_kv=380.0, name="N5", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (6,2))
-N103 = pp.create_bus(net, vn_kv=150.0, name="N103", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (4.5,1))
-N106 = pp.create_bus(net, vn_kv=150.0, name="N106", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (6,1))
+N103 = pp.create_bus(net, vn_kv=150.0, name="N103", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (4.5,1))   #Q3.3
+N106 = pp.create_bus(net, vn_kv=150.0, name="N106", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (6,1))     #Q3.3
 N14 = pp.create_bus(net, vn_kv=380.0, name="N14", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (6,-4))
 
 
@@ -68,16 +68,16 @@ LOAD_N204 = pp.create_load(net, bus=N204, p_mw=360.0, q_mvar=180.0, name="N204",
 
 
 # List of Shunts:
-pp.create_shunt(net, bus=N104, q_mvar=-75.0, in_service=True)
+pp.create_shunt(net, bus=N104, q_mvar=-75.0, in_service=False) #Q3.3
 pp.create_shunt(net, bus=N203, q_mvar=-45.0, in_service=True)
 pp.create_shunt(net, bus=N206, q_mvar=-45.0, in_service=True)
-pp.create_shunt(net, bus=N102, q_mvar=-75.0, in_service=True)
+pp.create_shunt(net, bus=N102, q_mvar=-75.0, in_service=False) #Q3.3
 pp.create_shunt(net, bus=N202, q_mvar=-45.0, in_service=True)
-pp.create_shunt(net, bus=N105, q_mvar=-75.0, in_service=True)
+pp.create_shunt(net, bus=N105, q_mvar=-75.0, in_service=False) #Q3.3
 pp.create_shunt(net, bus=N205, q_mvar=-45.0, in_service=True)
-pp.create_shunt(net, bus=N101, q_mvar=-75.0, in_service=True)
+pp.create_shunt(net, bus=N101, q_mvar=-75.0, in_service=False) #Q3.3
 pp.create_shunt(net, bus=N201, q_mvar=-45.0, in_service=True)
-pp.create_shunt(net, bus=N107, q_mvar=-75.0, in_service=True)
+pp.create_shunt(net, bus=N107, q_mvar=-75.0, in_service=False) #Q3.3
 pp.create_shunt(net, bus=N207, q_mvar=-45.0, in_service=True)
 pp.create_shunt(net, bus=N204, q_mvar=-45.0, in_service=True)
 
@@ -130,7 +130,7 @@ pp.create_transformer_from_parameters(net, hv_bus=N107, lv_bus=N207, sn_mva=500.
 
 # list of Generators:
 init = 0.99958
-vm = 1.0
+vm = 0.93
 G1 = pp.create_gen(net, p_mw=700.0, max_q_mvar=638.58, min_q_mvar=-250.0, sn_mva=1000.0, bus=M1, vm_pu=vm, name="M1", slack=False, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
 G2 = pp.create_gen(net, p_mw=600.0, max_q_mvar=696.53, min_q_mvar=-250.0, sn_mva=1000.0, bus=M2, vm_pu=0.99958, name="M2", slack=False, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
 G3=pp.create_gen(net, p_mw=375.0, max_q_mvar=220.83, min_q_mvar=-50.0, sn_mva=450.00, bus=M3, vm_pu=0.99000, name="M3", slack=False, in_service=True, min_p_mw=0., max_p_mw=405., controllable = True)
@@ -165,7 +165,7 @@ Force the reactive power limits
 
 """
 
-pp.runpp(net,algorithm='nr', initrafo_model='pi',enforce_q_lims=True,max_iteration=20000)
+pp.runpp(net,algorithm='nr', initrafo_model='pi',enforce_q_lims=True,max_iteration=2000)
 
 
 

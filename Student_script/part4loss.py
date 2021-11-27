@@ -49,12 +49,12 @@ N103 = pp.create_bus(net, vn_kv=150.0, name="N103", in_service=True, max_vm_pu=v
 N106 = pp.create_bus(net, vn_kv=150.0, name="N106", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (6,1))
 N14 = pp.create_bus(net, vn_kv=380.0, name="N14", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (6,-4))
 
-
+#To add the loading of N201 just remove the # in lines 56/57
 # list of Loads:
 initp = 360.0
 initq = 180.0
-q = initq +50
-p =initp +100
+q = initq #+50
+p =initp #+100
 LOAD_M1 = pp.create_load(net, bus=M1, p_mw=50.0, q_mvar=40.0, name="M1", in_service=True, max_p_mw=50., min_p_mw=50.0, max_q_mvar=40., min_q_mvar=40., controllable = True)
 LOAD_M2 = pp.create_load(net, bus=M2, p_mw=50.0, q_mvar=40.0, name="M2", in_service=True, max_p_mw=50.0, min_p_mw=50.0, max_q_mvar=40., min_q_mvar=40., controllable = True)
 LOAD_N11 = pp.create_load(net, bus=N11, p_mw=100.0, q_mvar=30.0, name="N11", in_service=True, max_p_mw=100., min_p_mw=100., max_q_mvar=30., min_q_mvar=30., controllable = True)
@@ -155,8 +155,11 @@ ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,18, 1.01,1.021, or
 
 #simu
 pp.runpp(net,algorithm='nr', initrafo_model='pi',enforce_q_lims=True,max_iteration=20000)
-
+print("-------------------------------------------------------")
+print("Q4.1")
+print("The active power of each generator in [MW]")
 print(net.res_gen.p_mw)
+print("The reactive power of each generator in [MVAr]")
 print(net.res_gen.q_mvar)
 
 
@@ -191,13 +194,13 @@ for i in range(G8):
     sumqgen += net.res_gen.q_mvar[i]
 
 
-"""
+
 print("Total load    : {:.3f} MW   {:.3f} MVAr".format(sumpload,sumqload))
 print("Total shunt   : {:.3f} MW   {:.3f} MVAr".format(sumpshunt,sumqshunt))
 print("Total line    : {:.3f} MW   {:.3f} MVAr".format(sumplossline,sumqlossline))
 print("Total transfo : {:.3f} MW   {:.3f} MVAr".format(sumplosstrafo,sumqlosstrafo))
 print("Total gen     : {:.3f} MW   {:.3f} MVAr".format(sumpgen,sumqgen))
-"""
+
 
 sumpbus =0 
 sumqbus =0
@@ -210,4 +213,3 @@ print("Total bus     : {:.3f} MW   {:.3f} MVAr".format(sumpbus,sumqbus))
 sump = sumpgen - sumpload - sumpshunt - sumplosstrafo - sumplossline - sumpbus
 sumq = sumqgen - sumqload - sumqshunt - sumqlosstrafo - sumqlossline - sumqbus
  
-print(net.res_line.p_from_mw)
