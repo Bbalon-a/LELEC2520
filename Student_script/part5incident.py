@@ -130,6 +130,7 @@ pp.create_transformer_from_parameters(net, hv_bus=N107, lv_bus=N207, sn_mva=500.
 
 # list of Generators:
 G1 = pp.create_gen(net, p_mw=700.0, max_q_mvar=638.58, min_q_mvar=-250.0, sn_mva=1000.0, bus=M1, vm_pu=0.99958, name="M1", slack=False, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
+
 G2 = pp.create_gen(net, p_mw=600.0, max_q_mvar=696.53, min_q_mvar=-250.0, sn_mva=1000.0, bus=M2, vm_pu=0.99958, name="M2", slack=False, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
 G3=pp.create_gen(net, p_mw=375.0, max_q_mvar=220.83, min_q_mvar=-50.0, sn_mva=450.00, bus=M3, vm_pu=0.99000, name="M3", slack=False, in_service=True, min_p_mw=0., max_p_mw=405., controllable = True)
 G4=pp.create_gen(net, p_mw=250.0, max_q_mvar=143.76, min_q_mvar=-50.0, sn_mva=300.00, bus=M4, vm_pu=0.97580, name="M4", slack=False, in_service=True, min_p_mw=0., max_p_mw=270., controllable = True)
@@ -146,4 +147,16 @@ ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,15, 1.01,1.021, or
 ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,16, 1.01,1.021, order = 0)
 ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,17, 1.01,1.021, order = 0)
 ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,18, 1.01,1.021, order = 0)
+
+# code here
+pp.runpp(net,algorithm='nr', initrafo_model='pi',enforce_q_lims=True,max_iteration=2000)
+
+#p_mw (float, default 0) - The active power of the generator (positive for generation!)
+#vm_pu (float, default 0) - The voltage set point of the generator.
+#sn_mva (float, None) - Nominal power of the generator
+#name (string, None) - The name for this generator
+#index (int, None) - Force a specified ID if it is available. If None, the index one higher than the highest already existing index is selected.
+#scaling (float, 1.0) - scaling factor which for the active power of the generator
+#type (string, None) - type variable to classify generators
+
 
