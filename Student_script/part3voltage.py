@@ -68,18 +68,22 @@ LOAD_N204 = pp.create_load(net, bus=N204, p_mw=360.0, q_mvar=180.0, name="N204",
 
 
 # List of Shunts:
-pp.create_shunt(net, bus=N104, q_mvar=-75.0, in_service=False) #Q3.3
+Q3_3 = False
+inservice = True
+if(Q3_3):
+    inservice = False
+pp.create_shunt(net, bus=N104, q_mvar=-75.0, in_service=inservice) #Q3.3
 pp.create_shunt(net, bus=N203, q_mvar=-45.0, in_service=True)
 pp.create_shunt(net, bus=N206, q_mvar=-45.0, in_service=True)
-pp.create_shunt(net, bus=N102, q_mvar=-75.0, in_service=False) #Q3.3
+pp.create_shunt(net, bus=N102, q_mvar=-75.0, in_service=inservice) #Q3.3
 pp.create_shunt(net, bus=N202, q_mvar=-45.0, in_service=True)
-pp.create_shunt(net, bus=N105, q_mvar=-75.0, in_service=False) #Q3.3
+pp.create_shunt(net, bus=N105, q_mvar=-75.0, in_service=inservice) #Q3.3
 pp.create_shunt(net, bus=N205, q_mvar=-45.0, in_service=True)
-pp.create_shunt(net, bus=N101, q_mvar=-75.0, in_service=False) #Q3.3
+pp.create_shunt(net, bus=N101, q_mvar=-75.0, in_service=inservice) #Q3.3
 pp.create_shunt(net, bus=N201, q_mvar=-45.0, in_service=True)
-pp.create_shunt(net, bus=N107, q_mvar=-75.0, in_service=False) #Q3.3
+pp.create_shunt(net, bus=N107, q_mvar=-75.0, in_service=inservice) #Q3.3
 pp.create_shunt(net, bus=N207, q_mvar=-45.0, in_service=True)
-pp.create_shunt(net, bus=N204, q_mvar=-45.0, in_service=True)
+shunt204=pp.create_shunt(net, bus=N204, q_mvar=-45.0, in_service=True)
 
 
 # list of Lines
@@ -105,7 +109,7 @@ pp.create_line_from_parameters(net, from_bus= N106, to_bus= N105, name="'N106N10
 pp.create_line_from_parameters(net, from_bus= N104, to_bus= N105, name="'N104N105", length_km=1, r_ohm_per_km=1.395, x_ohm_per_km=6.75, max_i_ka=1.347151, c_nf_per_km=141.469645815524, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(2,-2),(5,-2)])
 pp.create_line_from_parameters(net, from_bus= N104, to_bus= N103, name="'N104N103", length_km=1, r_ohm_per_km=1.395, x_ohm_per_km=6.75, max_i_ka=1.347151, c_nf_per_km=141.469645815524, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(2,-2),(4.5,1)])
 pp.create_line_from_parameters(net, from_bus= N13, to_bus= N14, name="'N13N14", length_km=1, r_ohm_per_km=3.148, x_ohm_per_km=33.342, max_i_ka=2.051113, c_nf_per_km=636.180504724648, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(5,-4),(6,-4)])
-pp.create_line_from_parameters(net, from_bus= N11, to_bus= N12, name="'N11N12", length_km=1, r_ohm_per_km=1.819, x_ohm_per_km=19.22, max_i_ka=2.051113, c_nf_per_km=597.384895796567, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(0,-4),(0,-3)])
+lineN11N12=pp.create_line_from_parameters(net, from_bus= N11, to_bus= N12, name="'N11N12", length_km=1, r_ohm_per_km=1.819, x_ohm_per_km=19.22, max_i_ka=2.051113, c_nf_per_km=597.384895796567, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(0,-4),(0,-3)])
 
 # list of Transformers:
 pp.create_transformer_from_parameters(net, hv_bus=N2, lv_bus=N107, sn_mva=550.0, name='N2N107', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.312, vk_percent=22.72114224681497, pfe_kw=0, i0_percent=0.0, tap_min=8, tap_max=8, tap_step_percent=1, tap_pos=8,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
@@ -126,11 +130,11 @@ pp.create_transformer_from_parameters(net, hv_bus=N104, lv_bus=N203, sn_mva=500.
 pp.create_transformer_from_parameters(net, hv_bus=N103, lv_bus=N204, sn_mva=500.0, name="'N204N103'", vn_hv_kv=150.0, vn_lv_kv=15.0, vkr_percent=0.277, vk_percent=11.53832544176147, pfe_kw=0, i0_percent=0.0, tap_pos=0, tap_neutral=0, tap_step_percent=1.0, tap_side="lv", tap_min=-4, tap_max=20, in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N105, lv_bus=N205, sn_mva=500.0, name="'N205N105'", vn_hv_kv=150.0, vn_lv_kv=15.0, vkr_percent=0.283, vk_percent=11.785398296196867, pfe_kw=0, i0_percent=0.0, tap_pos=0, tap_neutral=0, tap_step_percent=1.0, tap_side="lv", tap_min=-4, tap_max=20, in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N106, lv_bus=N206, sn_mva=500.0, name="'N206N106'", vn_hv_kv=150.0, vn_lv_kv=15.0, vkr_percent=0.277, vk_percent=11.53832544176147, pfe_kw=0, i0_percent=0.0, tap_pos=0, tap_neutral=0, tap_step_percent=1.0, tap_side="lv", tap_min=-4, tap_max=20, in_service=True,max_loading_percent = load_max)
-pp.create_transformer_from_parameters(net, hv_bus=N107, lv_bus=N207, sn_mva=500.0, name="'N207N107'", vn_hv_kv=150.0, vn_lv_kv=15.0, vkr_percent=0.277, vk_percent=11.53832544176147, pfe_kw=0, i0_percent=0.0, tap_pos=0, tap_neutral=0, tap_step_percent=1.0, tap_side="lv", tap_min=-4, tap_max=20, in_service=True,max_loading_percent = load_max)
+trafoN207N107=pp.create_transformer_from_parameters(net, hv_bus=N107, lv_bus=N207, sn_mva=500.0, name="'N207N107'", vn_hv_kv=150.0, vn_lv_kv=15.0, vkr_percent=0.277, vk_percent=11.53832544176147, pfe_kw=0, i0_percent=0.0, tap_pos=0, tap_neutral=0, tap_step_percent=1.0, tap_side="lv", tap_min=-4, tap_max=20, in_service=True,max_loading_percent = load_max)
 
 # list of Generators:
 init = 0.99958
-vm = 0.93
+vm = 0.91
 G1 = pp.create_gen(net, p_mw=700.0, max_q_mvar=638.58, min_q_mvar=-250.0, sn_mva=1000.0, bus=M1, vm_pu=vm, name="M1", slack=False, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
 G2 = pp.create_gen(net, p_mw=600.0, max_q_mvar=696.53, min_q_mvar=-250.0, sn_mva=1000.0, bus=M2, vm_pu=0.99958, name="M2", slack=False, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
 G3=pp.create_gen(net, p_mw=375.0, max_q_mvar=220.83, min_q_mvar=-50.0, sn_mva=450.00, bus=M3, vm_pu=0.99000, name="M3", slack=False, in_service=True, min_p_mw=0., max_p_mw=405., controllable = True)
@@ -171,8 +175,72 @@ pp.runpp(net,algorithm='nr', initrafo_model='pi',enforce_q_lims=True,max_iterati
 
 
 genQ2= 0
-#Q2 
+#Q3.2 
+#Q3.3 must be equal to False
+print("----------------------------------------------------------------")
+print("Q3.2")
+print("Generator reactive and active power for {:.2f} p.u.".format(vm))
 M1Power = net.res_gen.p_mw
 M1rPower = net.res_gen.q_mvar
 print(M1Power)
 print(M1rPower)
+sumplossline =0
+sumqlossline =0
+for i in range(lineN11N12+1):
+    sumplossline += net.res_line.pl_mw[i]
+    sumqlossline += net.res_line.ql_mvar[i]
+
+sumplosstrafo = 0
+sumqlosstrafo = 0
+for i in range(trafoN207N107+1):
+    sumplosstrafo += net.res_trafo.pl_mw[i]
+    sumqlosstrafo += net.res_trafo.ql_mvar[i]
+print("Active losses = {:.3F} [MW]".format(sumplosstrafo+sumplossline))
+print("Reactive losses = {:.3F} [MVAr]".format(sumqlossline+sumqlosstrafo))
+#Q3.3
+print("----------------------------------------------------------------")
+print("Q3.3")
+sumpgen = 0
+sumqgen = 0
+for i in range(G8+1):
+    print(net.res_gen.q_mvar[i])
+    sumpgen += net.res_gen.p_mw[i]
+    sumqgen += net.res_gen.q_mvar[i]
+
+
+sumpload = 0 
+sumqload = 0
+for i in range(LOAD_N204+1):
+    
+    sumpload += net.res_load.p_mw[i]
+    sumqload += net.res_load.q_mvar[i]
+
+sumpshunt =0 
+sumqshunt =0
+for i in range(shunt204+1):
+    sumpshunt += net.res_shunt.p_mw[i]
+    sumqshunt += net.res_shunt.q_mvar[i]
+
+sumplossline =0
+sumqlossline =0
+for i in range(lineN11N12+1):
+    sumplossline += net.res_line.pl_mw[i]
+    sumqlossline += net.res_line.ql_mvar[i]
+
+sumplosstrafo = 0
+sumqlosstrafo = 0
+for i in range(trafoN207N107+1):
+    sumplosstrafo += net.res_trafo.pl_mw[i]
+    sumqlosstrafo += net.res_trafo.ql_mvar[i]
+print("Active power of generator = {:.3f} [MW]".format(sumpgen))
+print("Reactive power of generator = {:.3f} [MVAr]".format(sumqgen))
+print("Active losses = {:.3F} [MW]".format(sumplosstrafo+sumplossline))
+print("Reactive losses = {:.3F} [MVAr]".format(sumqlossline+sumqlosstrafo))
+
+sumpbus =0 
+sumqbus =0
+for i in range(N14+1):
+    sumpbus+= net.res_bus.p_mw[i]
+    sumqbus+= net.res_bus.q_mvar[i]
+
+print("Total shunt    : {:.3f} MW   {:.3f} MVAr".format(sumpshunt,sumqshunt))
