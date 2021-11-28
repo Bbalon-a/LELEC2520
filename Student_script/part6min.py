@@ -154,3 +154,24 @@ Create the constraints here
 Launch the right routine too
 
 """
+
+pp.create_poly_cost(net,G1,'gen',cp1_eur_per_mw=1)
+pp.create_poly_cost(net,G2,'gen',cp1_eur_per_mw=1)
+pp.create_poly_cost(net,G3,'gen',cp1_eur_per_mw=1)
+pp.create_poly_cost(net,G4,'gen',cp1_eur_per_mw=1)
+pp.create_poly_cost(net,G5,'gen',cp1_eur_per_mw=1)
+pp.create_poly_cost(net,G6,'gen',cp1_eur_per_mw=1)
+pp.create_poly_cost(net,G7,'gen',cp1_eur_per_mw=1)
+pp.create_poly_cost(net,G8,'gen',cp1_eur_per_mw=1)
+
+pp.runopp(net)
+
+pf_res_plotly(net, aspectratio=(1,1)); 
+p=0
+q=0
+for i in range(G8+1):
+    p+= net.res_gen.p_mw[i]
+    q+= net.res_gen.q_mvar[i]
+
+print("Total active power produced = {:.3f} [MW]".format(p))
+print("Total reactive power produced = {:.3f} [MW]".format(q))

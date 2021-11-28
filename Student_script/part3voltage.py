@@ -134,7 +134,7 @@ trafoN207N107=pp.create_transformer_from_parameters(net, hv_bus=N107, lv_bus=N20
 
 # list of Generators:
 init = 0.99958
-vm = 0.91
+vm = init
 G1 = pp.create_gen(net, p_mw=700.0, max_q_mvar=638.58, min_q_mvar=-250.0, sn_mva=1000.0, bus=M1, vm_pu=vm, name="M1", slack=False, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
 G2 = pp.create_gen(net, p_mw=600.0, max_q_mvar=696.53, min_q_mvar=-250.0, sn_mva=1000.0, bus=M2, vm_pu=0.99958, name="M2", slack=False, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
 G3=pp.create_gen(net, p_mw=375.0, max_q_mvar=220.83, min_q_mvar=-50.0, sn_mva=450.00, bus=M3, vm_pu=0.99000, name="M3", slack=False, in_service=True, min_p_mw=0., max_p_mw=405., controllable = True)
