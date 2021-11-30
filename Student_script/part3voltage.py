@@ -5,6 +5,7 @@ import pandapower.plotting as plot
 from pandapower.plotting.plotly import pf_res_plotly
 from pandapower.plotting.plotly import simple_plotly
 import pandapower.control as ct
+import numpy as np
 net = pp.create_empty_network(f_hz=50, sn_mva=100)
     
 vmin = 0.95
@@ -172,6 +173,28 @@ Force the reactive power limits
 pp.runpp(net,algorithm='nr', initrafo_model='pi',enforce_q_lims=True,max_iteration=2000)
 
 
+print("----------------------------------------------------------------")
+print("Q3.1")
+X = 2.2 
+xprimemprime = 0.25
+SN = 1000 
+SNpu = 1000/1000
+P = 600
+Ppu = 0.6
+PN = 850
+PNpu = 850 /1000
+QN = np.sqrt(SN**2-PN**2)
+QNpu = np.sqrt(SNpu**2 - PNpu**2)
+sigma = 0.04
+VNpu = 0.99958 
+QNS = np.sqrt((VNpu * SNpu)**2 - Ppu**2) 
+E0pu = X/VNpu * np.sqrt(PNpu**2 + (QNpu+VNpu**2/X)**2)
+Qmaxpu = np.sqrt((E0pu *VNpu/X )**2 - Ppu**2) - VNpu**2/X
+print("Maximal reactive power produced by the stator = {:.3f} [p.u.]".format(QNS))
+print("Maximal value of E0 = {:.3f} [p.u.]".format(E0pu))
+print("Maximal reactive power produced by the rotor = {:.3f} [p.u.]".format(Qmaxpu))
+print("Theoritical maximum reactive power produced by M2 = {:.3f} [MVAr]".format(Qmaxpu *SN))
+print("Simulation maximum reactive power produced by M2 = {:.3f} [MVAr]".format(net.gen.max_q_mvar[M2]))
 
 
 genQ2= 0
@@ -195,23 +218,21 @@ sumqlosstrafo = 0
 for i in range(trafoN207N107+1):
     sumplosstrafo += net.res_trafo.pl_mw[i]
     sumqlosstrafo += net.res_trafo.ql_mvar[i]
-print("Active losses = {:.3F} [MW]".format(sumplosstrafo+sumplossline))
-print("Reactive losses = {:.3F} [MVAr]".format(sumqlossline+sumqlosstrafo))
+print("Total Active losses = {:.3F} [MW]".format(sumplosstrafo+sumplossline))
+print("Total Reactive losses = {:.3F} [MVAr]".format(sumqlossline+sumqlosstrafo))
 #Q3.3
 print("----------------------------------------------------------------")
 print("Q3.3")
 sumpgen = 0
 sumqgen = 0
 for i in range(G8+1):
-    print(net.res_gen.q_mvar[i])
     sumpgen += net.res_gen.p_mw[i]
     sumqgen += net.res_gen.q_mvar[i]
 
 
 sumpload = 0 
 sumqload = 0
-for i in range(LOAD_N204+1):
-    
+for i in range(LOAD_N204+1):  
     sumpload += net.res_load.p_mw[i]
     sumqload += net.res_load.q_mvar[i]
 
@@ -232,10 +253,14 @@ sumqlosstrafo = 0
 for i in range(trafoN207N107+1):
     sumplosstrafo += net.res_trafo.pl_mw[i]
     sumqlosstrafo += net.res_trafo.ql_mvar[i]
-print("Active power of generator = {:.3f} [MW]".format(sumpgen))
-print("Reactive power of generator = {:.3f} [MVAr]".format(sumqgen))
-print("Active losses = {:.3F} [MW]".format(sumplosstrafo+sumplossline))
-print("Reactive losses = {:.3F} [MVAr]".format(sumqlossline+sumqlosstrafo))
+if(Q3_3):
+    print("The shunts are desactivated")
+else :
+    print("All shunts are activated please set the adequate variable to False to get the good results")
+print("Active power produced by the generators = {:.3f} [MW]".format(sumpgen))
+print("Reactive power produced by the generators = {:.3f} [MVAr]".format(sumqgen))
+print("Total Active losses = {:.3F} [MW]".format(sumplosstrafo+sumplossline))
+print("Total Reactive losses = {:.3F} [MVAr]".format(sumqlossline+sumqlosstrafo))
 
 sumpbus =0 
 sumqbus =0
