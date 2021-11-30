@@ -102,9 +102,9 @@ pp.create_shunt(net, bus=N204, q_mvar=-45.0, in_service=True)#11
 # max_loading_percent = maximum current loading (only needed for OPF)
 
 pp.create_line_from_parameters(net, from_bus= N11, to_bus= N10, name="'N11N10", length_km=1, r_ohm_per_km=1.141, x_ohm_per_km=12.086, max_i_ka=2.157467, c_nf_per_km=434.703079165756, in_service=True,max_loading_percent = load_max , controllable = True, geodata = [(0,-4),(1,-4)])
-pp.create_line_from_parameters(net, from_bus= N6, to_bus= N8, name="'N6N8", length_km=1, r_ohm_per_km=1.444, x_ohm_per_km=14.44, max_i_ka=2.157467, c_nf_per_km=537.867313277922, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(0.5,-3)])
+N6N8 = pp.create_line_from_parameters(net, from_bus= N6, to_bus= N8, name="'N6N8", length_km=1, r_ohm_per_km=1.444, x_ohm_per_km=14.44, max_i_ka=2.157467, c_nf_per_km=537.867313277922, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(0.5,-3)])
 pp.create_line_from_parameters(net, from_bus= N6, to_bus= N9, name="'N6N9", length_km=1, r_ohm_per_km=1.357, x_ohm_per_km=14.368, max_i_ka=2.157467, c_nf_per_km=538.306580920856, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(1,-3)])
-pp.create_line_from_parameters(net, from_bus= N6, to_bus= N4, name="'N6N4", length_km=1, r_ohm_per_km=1.213, x_ohm_per_km=10.224, max_i_ka=2.157467, c_nf_per_km=380.915074598419, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(1.5,1.5),(2.5,2)]) #3
+N6N4=pp.create_line_from_parameters(net, from_bus= N6, to_bus= N4, name="'N6N4", length_km=1, r_ohm_per_km=1.213, x_ohm_per_km=10.224, max_i_ka=2.157467, c_nf_per_km=380.915074598419, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(1.5,1.5),(2.5,2)]) #3
 pp.create_line_from_parameters(net, from_bus= N6, to_bus= N7, name="'N6N7", length_km=1, r_ohm_per_km=1.213, x_ohm_per_km=10.224, max_i_ka=2.157467, c_nf_per_km=380.915074598419, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(4.5,-1)])
 pp.create_line_from_parameters(net, from_bus= N8, to_bus= N10, name="'N8N10", length_km=1, r_ohm_per_km=2.166, x_ohm_per_km=23.104, max_i_ka=2.157467, c_nf_per_km=881.718384729100, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(0.5,-3),(1,-4)])
 pp.create_line_from_parameters(net, from_bus= N9, to_bus= N10, name="'N9N10", length_km=1, r_ohm_per_km=2.166, x_ohm_per_km=23.104, max_i_ka=2.157467, c_nf_per_km=881.718384729100, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1,-3),(1,-4)])
@@ -213,7 +213,7 @@ pp.runpp(net,algorithm='nr',init='flat',trafo_model='pi')
 
 #Information on our line 
 Snom = net.sn_mva*10**6
-line_num =3
+line_num = N6N4
 bus_numFrom =24
 bus_numTo =25
 trafo_num = 4
@@ -221,8 +221,8 @@ trafo_num = 4
 #Q1
 R = net.line.r_ohm_per_km[line_num]
 XL = net.line.x_ohm_per_km[line_num]
-XC = 1/(2*np.pi*50*net.line.c_nf_per_km[line_num]*10**(-9))
-Vg = net.bus.vn_kv[24]*10**3
+YC = 2 * np.pi * 50 * net.line.c_nf_per_km[line_num] * 10**(-9) * 1.j
+Vg = net.bus.vn_kv[N6]*10**3
 Vg_nom = Vg/np.sqrt(3)
 Z = R + 1.j * XL
 
@@ -232,12 +232,13 @@ VN4phase = np.cos(net.res_line.va_to_degree[line_num]/180*np.pi) + 1.j * np.sin(
 VN6 = net.res_line.vm_from_pu[line_num] * Vg_nom * VN6phase 
 VN4 = net.res_line.vm_to_pu[line_num] * Vg_nom * VN4phase 
 
-IN6 = VN6/(-1.j*XC/2) + (VN6 - VN4)/Z
-IN4 = VN4/(-1.j*XC/2) + (VN4 - VN6)/Z
+
+IN6 = VN6 * YC/2 + (VN6 - VN4)/Z
+IN4 = VN4 *YC /2 + (VN4 - VN6)/Z
+
 
 SN6 = 3*VN6*np.conjugate(IN6)
 SN4 = 3*VN4*np.conjugate(IN4)
-
 
 ###############################################################
 #Q2 
@@ -247,13 +248,14 @@ Qloss = np.imag(Sloss)
 
 ###############################################################
 #Q3 
-Zc = np.sqrt(Z*(1.j*XC))
+Zc = np.sqrt(Z/YC)
 Sn = Vg_nom**2/ np.conjugate(Zc)
 
 ###############################################################
 #Q4 
-IN6_max = Snom /(np.sqrt(3)*np.abs(VN6))
-IN4_max = Snom /(np.sqrt(3)*np.abs(VN4))
+Snnominal = np.abs(Sn)
+IN6_max = Snom /(np.abs(VN6))
+IN4_max = Snom /(np.abs(VN4))
 
 percentageI6 = np.abs(IN6)/IN6_max
 percentageI4 = np.abs(IN4)/IN4_max
@@ -270,15 +272,17 @@ anglet = net.trafo.shift_degree[trafo_num]
 zk = net.trafo.vk_percent[trafo_num]/100 * Snom/10**6/St_nom
 rk = net.trafo.vkr_percent[trafo_num] /100 * Snom/10**6/St_nom
 xk = np.sqrt(zk**2 - rk**2)
+"""
 print("R_pu = {:.6f} [p.u.]".format(rk))
-print("Z_pu = {:.4f} [p.u.]".format(zk))
-print("X_pu = {:.4f} [p.u.]".format(xk))
+print("Z_pu = {:.3f} [p.u.]".format(zk))
+print("X_pu = {:.3f} [p.u.]".format(xk))
+"""
 
 
 
 
 n = net.trafo.vn_hv_kv[trafo_num]/net.trafo.vn_lv_kv[trafo_num] * net.bus.vn_kv[N106]/net.bus.vn_kv[N5]
-print("n_pu = {:.3f} [p.u.]".format(n))
+#print("n_pu = {:.3f} [p.u.]".format(n))
 
 tra_num = 4
 
@@ -290,18 +294,19 @@ VHphase = np.cos(net.res_trafo.va_hv_degree[tra_num]/180*np.pi) + 1.j * np.sin(n
 VLphase = np.cos(net.res_trafo.va_lv_degree[tra_num]/180*np.pi) + 1.j * np.sin(net.res_trafo.va_lv_degree[tra_num]/180*np.pi)
 VHmagpu = net.res_trafo.vm_hv_pu[tra_num]
 VLmagpu = net.res_trafo.vm_lv_pu[tra_num]
+"""
 print("{:.3f}".format(net.res_trafo.va_hv_degree[tra_num]))
 print("{:.3f}".format(net.res_trafo.va_lv_degree[tra_num]))
 print("{:.3f}".format(VHmagpu))
 print("{:.3f}".format(VLmagpu))
-
+"""
 #N5 high voltage and N106 low voltage 
 High_num = N5
 Low_num = N106
 
 V5pu =VHmagpu * VHphase
 V106pu = VLmagpu * VLphase
-
+"""
 print("{:.3f}".format(V5pu))
 print("{:.3f}".format(V106pu))
 Zeqpu = rk +1.j*xk
@@ -311,6 +316,7 @@ I106pu = -1/(n*Zeqpu) * V5pu+ 1/(n**2 * Zeqpu) * V106pu
 
 print("{:.3f}".format(I5pu))
 print("{:.3f}".format(I106pu))
+"""
 """
 SN5 = VN5pu * np.conjugate(IN5pu) * VN5ref
 SN106 = VN106pu * np.conjugate(IN106pu) * VN106ref
@@ -341,44 +347,52 @@ fpwithshunt = Pload/(np.sqrt(Pload**2 +(Qload-Qshunt)**2))
 Qshuntsimu = net.res_shunt.q_mvar[shunt_num] *10**6
 fpwithshuntsimu = Pload/(np.sqrt(Pload**2 +(Qload-Qshuntsimu)**2))
 
-"""
+
 print("-------------------------------------------------------")
 print("Q1.1")
 print("Theoritical Results:")
-print("Active power of node N6 = {:.4f} MW, Reactive power of node N6 = {:.4f} MVar".format(np.real(SN6)/10**6,np.imag(SN6)/10**6))
-print("Active power of node N4 = {:.4f} MW, Reactive power of node N4 = {:.4f} MVar".format(np.real(SN4)/10**6,np.imag(SN4)/10**6))
+print("Value of R = {:.3f} [\u03A9]".format(R))
+print("Value of X_L = {:.3f} [\u03A9]".format(XL))
+print("Value of YC = {:.3f} [\u03BC S]".format(YC*10**6))
+print("Voltage at N6 = {:.3f} < {:.3f}° [kV]".format(np.abs(VN6)/10**3,np.angle(VN6)*180/np.pi))
+print("Voltage at N4 = {:.3f} < {:.3f}° [kV]".format(np.abs(VN4)/10**3,np.angle(VN4)*180/np.pi))
+print("Current at N6 = {:.3f} < {:.3f}° [A]".format(np.abs(IN6),np.angle(IN6)*180/np.pi))
+print("Current at N4 = {:.3f} < {:.3f}° [A]".format(np.abs(IN4),np.angle(IN4)*180/np.pi))
+print("Power at N6 = {:.3f} [MVA]".format(SN6/10**6))
+print("Power at N4 = {:.3f} [MVA]".format(SN4/10**6))
+print("Active power of node N6 = {:.3f} MW, Reactive power of node N6 = {:.3f} MVar".format(np.real(SN6)/10**6,np.imag(SN6)/10**6))
+print("Active power of node N4 = {:.3f} MW, Reactive power of node N4 = {:.3f} MVar".format(np.real(SN4)/10**6,np.imag(SN4)/10**6))
 print("Simulation Results:")
-print("Active power of node N6 = {:.4f} MW, Reactive power of node N6 = {:.4f} MVar".format(net.res_line.p_from_mw[line_num],net.res_line.q_from_mvar[line_num]))
-print("Active power of node N4 = {:.4f} MW, Reactive power of node N4 = {:.4f} MVar".format(net.res_line.p_to_mw[line_num],net.res_line.q_to_mvar[line_num]))
+print("Active power of node N6 = {:.3f} MW, Reactive power of node N6 = {:.3f} MVar".format(net.res_line.p_from_mw[line_num],net.res_line.q_from_mvar[line_num]))
+print("Active power of node N4 = {:.3f} MW, Reactive power of node N4 = {:.3f} MVar".format(net.res_line.p_to_mw[line_num],net.res_line.q_to_mvar[line_num]))
 print("-------------------------------------------------------")
 print("Q1.2")
 print("Theoritical Results:")
-print("Resistive losses = {:.4f} MW".format(Ploss/10**6))
-print("Reactive losses = {:.4f} MVar".format(Qloss/10**6))
+print("Resistive losses = {:.3f} MW".format(Ploss/10**6))
+print("Reactive losses = {:.3f} MVar".format(Qloss/10**6))
 print("Simulation Results:")
-print("Resistive losses = {:.4f} MW".format(net.res_line.pl_mw[line_num]))
-print("Reactive losses = {:.4f} MVar".format(net.res_line.ql_mvar[line_num]))
+print("Resistive losses = {:.3f} MW".format(net.res_line.pl_mw[line_num]))
+print("Reactive losses = {:.3f} MVar".format(net.res_line.ql_mvar[line_num]))
 print("-------------------------------------------------------")
 print("Q1.3")
-print("The surge impedance Z_c = {:.4f} \u03A9".format(Zc))
-print("The surge impedance loading = {:.4f} < {:.4f}° MVA".format(np.abs(Sn)/10**6,np.angle(Sn)*180/np.pi))
+print("The surge impedance Z_c = {:.3f} < {:.3f}\u03A9".format(abs(Zc),np.angle(Zc)*180/np.pi))
+print("The surge impedance loading = {:.3f} < {:.3f}° MVA".format(np.abs(Sn)/10**6,np.angle(Sn)*180/np.pi))
 print("-------------------------------------------------------")
 print("Q1.4")
-print("Maximum current from N6 = {:.4f} [A], ratio IN6/IN6_max = {:.2f}%".format(IN6_max,percentageI6*100))
-print("Maximum current from N4 = {:.4f} [A], ratio IN4/IN4_max = {:.2f}%".format(IN4_max,percentageI4*100))
+print("Maximum current from N6 = {:.3f} [A], ratio IN6/IN6_max = {:.2f}%".format(IN6_max,percentageI6*100))
+print("Maximum current from N4 = {:.3f} [A], ratio IN4/IN4_max = {:.2f}%".format(IN4_max,percentageI4*100))
 print("-------------------------------------------------------")
 print("-------------------------------------------------------")
 print("-------------------------------------------------------")
 print("-------------------------------------------------------")
 print("Q1.8")
 print("Without shunt compensation")
-print("Q_shunt = 0, fp = {:.4f}".format(fpwithoutshunt))
+print("Q_shunt = 0, fp = {:.3f}".format(fpwithoutshunt))
 print("With shunt compensation")
 print("Theoritical results:")
-print("Q_shunt = {:.4f} MVAr, fp = {:.4f}".format(Qshunt/10**6,fpwithshunt))
+print("Q_shunt = {:.3f} MVAr, fp = {:.3f}".format(Qshunt/10**6,fpwithshunt))
 print("Simulation results:")
-print("Q_shunt = {:.4f} MVAr, fp = {:.4f}".format(Qshuntsimu/10**6,fpwithshuntsimu))
+print("Q_shunt = {:.3f} MVAr, fp = {:.3f}".format(Qshuntsimu/10**6,fpwithshuntsimu))
 
 
 
-"""
