@@ -262,41 +262,59 @@ percentageI4 = np.abs(IN4)/IN4_max
 #Q5
 ##Not working 
 St_nom = net.trafo.sn_mva[trafo_num]
+
 anglet = net.trafo.shift_degree[trafo_num]
 
-n = net.trafo.vn_hv_kv[trafo_num]/net.trafo.vn_lv_kv[trafo_num] *net.trafo.lv_bus[trafo_num]/net.trafo.hv_bus[trafo_num]
 
-zk = net.trafo.vk_percent[trafo_num]/100 * Snom/St_nom
-rk = net.trafo.vkr_percent[trafo_num] /100 * Snom/St_nom
+
+zk = net.trafo.vk_percent[trafo_num]/100 * Snom/10**6/St_nom
+rk = net.trafo.vkr_percent[trafo_num] /100 * Snom/10**6/St_nom
 xk = np.sqrt(zk**2 - rk**2)
+print("R_pu = {:.6f} [p.u.]".format(rk))
+print("Z_pu = {:.4f} [p.u.]".format(zk))
+print("X_pu = {:.4f} [p.u.]".format(xk))
 
-Rtransfo = net.trafo.vkr_percent[trafo_num] /100 
-Ztransfo = net.trafo.vk_percent[trafo_num]  /100
-Xtransfo = np.sqrt(Ztransfo**2- Rtransfo**2)
-#print(n)
-#print(Rtransfo)
-#print(Xtransfo)
+
+
+
+n = net.trafo.vn_hv_kv[trafo_num]/net.trafo.vn_lv_kv[trafo_num] * net.bus.vn_kv[N106]/net.bus.vn_kv[N5]
+print("n_pu = {:.3f} [p.u.]".format(n))
 
 tra_num = 4
+
+"""
+res_trafo et res_bus pour kv et angle sont les mêmes 
+"""
+
 VHphase = np.cos(net.res_trafo.va_hv_degree[tra_num]/180*np.pi) + 1.j * np.sin(net.res_trafo.va_hv_degree[tra_num]/180*np.pi)
 VLphase = np.cos(net.res_trafo.va_lv_degree[tra_num]/180*np.pi) + 1.j * np.sin(net.res_trafo.va_lv_degree[tra_num]/180*np.pi)
 VHmagpu = net.res_trafo.vm_hv_pu[tra_num]
 VLmagpu = net.res_trafo.vm_lv_pu[tra_num]
+print("{:.3f}".format(net.res_trafo.va_hv_degree[tra_num]))
+print("{:.3f}".format(net.res_trafo.va_lv_degree[tra_num]))
+print("{:.3f}".format(VHmagpu))
+print("{:.3f}".format(VLmagpu))
+
 #N5 high voltage and N106 low voltage 
-High_num = 30
-Low_num = 32 
+High_num = N5
+Low_num = N106
 
-VN5ref = net.bus.vn_kv[High_num] *10**3
-VN106ref = net.bus.vn_kv[Low_num] *10**3
-VN5pu =  VHmagpu * VHphase
-VN106pu =  VLmagpu * VLphase
-Zeqpu = Rtransfo +1.j*Xtransfo
+V5pu =VHmagpu * VHphase
+V106pu = VLmagpu * VLphase
 
-IN5pu = 1/Zeqpu * VN5pu - 1/(n*Zeqpu) * VN106pu
-IN106pu = -1/(n*Zeqpu) * VN5pu + 1/(n**2 * Zeqpu) * VN106pu
+print("{:.3f}".format(V5pu))
+print("{:.3f}".format(V106pu))
+Zeqpu = rk +1.j*xk
+print("{:.6f}".format(Zeqpu))
+I5pu = 1/Zeqpu * V5pu - 1/(n*Zeqpu) * V106pu
+I106pu = -1/(n*Zeqpu) * V5pu+ 1/(n**2 * Zeqpu) * V106pu
 
+print("{:.3f}".format(I5pu))
+print("{:.3f}".format(I106pu))
+"""
 SN5 = VN5pu * np.conjugate(IN5pu) * VN5ref
 SN106 = VN106pu * np.conjugate(IN106pu) * VN106ref
+"""
 #print(SN5/10**6, SN6/10**6)
 #print(net.res_trafo.p_hv_mw[tra_num],net.res_trafo.q_hv_mvar[tra_num])
 #print(net.res_trafo.p_lv_mw[tra_num],net.res_trafo.q_lv_mvar[tra_num])
@@ -323,7 +341,7 @@ fpwithshunt = Pload/(np.sqrt(Pload**2 +(Qload-Qshunt)**2))
 Qshuntsimu = net.res_shunt.q_mvar[shunt_num] *10**6
 fpwithshuntsimu = Pload/(np.sqrt(Pload**2 +(Qload-Qshuntsimu)**2))
 
-
+"""
 print("-------------------------------------------------------")
 print("Q1.1")
 print("Theoritical Results:")
@@ -363,3 +381,4 @@ print("Q_shunt = {:.4f} MVAr, fp = {:.4f}".format(Qshuntsimu/10**6,fpwithshuntsi
 
 
 
+"""
