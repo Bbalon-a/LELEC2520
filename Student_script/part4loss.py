@@ -53,8 +53,13 @@ N14 = pp.create_bus(net, vn_kv=380.0, name="N14", in_service=True, max_vm_pu=vma
 # list of Loads:
 initp = 360.0
 initq = 180.0
-q = initq #+50
-p =initp #+100
+loading = True #Set to True if the loading increases
+q = initq 
+p =initp 
+if(loading):
+    q+= 50
+    p+= 100
+
 LOAD_M1 = pp.create_load(net, bus=M1, p_mw=50.0, q_mvar=40.0, name="M1", in_service=True, max_p_mw=50., min_p_mw=50.0, max_q_mvar=40., min_q_mvar=40., controllable = True)
 LOAD_M2 = pp.create_load(net, bus=M2, p_mw=50.0, q_mvar=40.0, name="M2", in_service=True, max_p_mw=50.0, min_p_mw=50.0, max_q_mvar=40., min_q_mvar=40., controllable = True)
 LOAD_N11 = pp.create_load(net, bus=N11, p_mw=100.0, q_mvar=30.0, name="N11", in_service=True, max_p_mw=100., min_p_mw=100., max_q_mvar=30., min_q_mvar=30., controllable = True)
@@ -134,6 +139,7 @@ pp.create_transformer_from_parameters(net, hv_bus=N106, lv_bus=N206, sn_mva=500.
 trafoN207N107 =pp.create_transformer_from_parameters(net, hv_bus=N107, lv_bus=N207, sn_mva=500.0, name="'N207N107'", vn_hv_kv=150.0, vn_lv_kv=15.0, vkr_percent=0.277, vk_percent=11.53832544176147, pfe_kw=0, i0_percent=0.0, tap_pos=0, tap_neutral=0, tap_step_percent=1.0, tap_side="lv", tap_min=-4, tap_max=20, in_service=True,max_loading_percent = load_max)
 
 # list of Generators:
+#N12 is set as the slack node
 G1 = pp.create_gen(net, p_mw=700.0, max_q_mvar=638.58, min_q_mvar=-250.0, sn_mva=1000.0, bus=M1, vm_pu=0.99958, name="M1", slack=False, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
 G2 = pp.create_gen(net, p_mw=600.0, max_q_mvar=696.53, min_q_mvar=-250.0, sn_mva=1000.0, bus=M2, vm_pu=0.99958, name="M2", slack=False, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
 G3=pp.create_gen(net, p_mw=375.0, max_q_mvar=220.83, min_q_mvar=-50.0, sn_mva=450.00, bus=M3, vm_pu=0.99000, name="M3", slack=False, in_service=True, min_p_mw=0., max_p_mw=405., controllable = True)
@@ -157,6 +163,10 @@ ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,18, 1.01,1.021, or
 pp.runpp(net,algorithm='nr', initrafo_model='pi',enforce_q_lims=True,max_iteration=20000)
 print("-------------------------------------------------------")
 print("Q4.1")
+if(loading):
+    print("The load at N201 increased by 100[MW] and 50 [MVAr].")
+else: 
+    print("The load at N201 has its original loading")
 print("The active power of each generator in [MW]")
 print(net.res_gen.p_mw)
 print("The reactive power of each generator in [MVAr]")
@@ -165,51 +175,40 @@ print(net.res_gen.q_mvar)
 
 sumpload = 0 
 sumqload = 0
-for i in range(LOAD_N204):
+for i in range(LOAD_N204+1):
     sumpload += net.res_load.p_mw[i]
     sumqload += net.res_load.q_mvar[i]
 
 sumpshunt =0 
 sumqshunt =0
-for i in range(shunt204):
+for i in range(shunt204+1):
     sumpshunt += net.res_shunt.p_mw[i]
     sumqshunt += net.res_shunt.q_mvar[i]
 
 sumplossline =0
 sumqlossline =0
-for i in range(lineN11N12):
+for i in range(lineN11N12+1):
     sumplossline += net.res_line.pl_mw[i]
     sumqlossline += net.res_line.ql_mvar[i]
 
 sumplosstrafo = 0
 sumqlosstrafo = 0
-for i in range(trafoN207N107):
+for i in range(trafoN207N107+1):
     sumplosstrafo += net.res_trafo.pl_mw[i]
     sumqlosstrafo += net.res_trafo.ql_mvar[i]
 
 sumpgen = 0
 sumqgen = 0
-for i in range(G8):
+for i in range(G8+1):
     sumpgen += net.res_gen.p_mw[i]
     sumqgen += net.res_gen.q_mvar[i]
 
-
-
-print("Total load    : {:.3f} MW   {:.3f} MVAr".format(sumpload,sumqload))
-print("Total shunt   : {:.3f} MW   {:.3f} MVAr".format(sumpshunt,sumqshunt))
-print("Total line    : {:.3f} MW   {:.3f} MVAr".format(sumplossline,sumqlossline))
-print("Total transfo : {:.3f} MW   {:.3f} MVAr".format(sumplosstrafo,sumqlosstrafo))
-print("Total gen     : {:.3f} MW   {:.3f} MVAr".format(sumpgen,sumqgen))
-
-
 sumpbus =0 
 sumqbus =0
-for i in range(N14):
+for i in range(N14+1):
     sumpbus+= net.res_bus.p_mw[i]
     sumqbus+= net.res_bus.q_mvar[i]
 
-print("Total bus     : {:.3f} MW   {:.3f} MVAr".format(sumpbus,sumqbus))
-
-sump = sumpgen - sumpload - sumpshunt - sumplosstrafo - sumplossline - sumpbus
-sumq = sumqgen - sumqload - sumqshunt - sumqlosstrafo - sumqlossline - sumqbus
- 
+print("Total active power produced = {:.3f} [MW]".format(sumpgen))
+print("Total active losses = {:.3f} [MW]".format(sumplosstrafo + sumplossline))
+print("Total active power of the loads = {:.3f} [MW]".format(sumpload))
