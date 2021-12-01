@@ -142,10 +142,10 @@ pp.create_line_from_parameters(net, from_bus= N11, to_bus= N12, name="'N11N12", 
 # tap_side = position of tap changer (“hv”, “lv”)
 # max_loading_percent (float) - maximum current loading (only needed for OPF)
 pp.create_transformer_from_parameters(net, hv_bus=N2, lv_bus=N107, sn_mva=550.0, name='N2N107', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.312, vk_percent=22.72114224681497, pfe_kw=0, i0_percent=0.0, tap_min=8, tap_max=8, tap_step_percent=1, tap_pos=8,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
-pp.create_transformer_from_parameters(net, hv_bus=N3, lv_bus=N101, sn_mva=550.0, name='N3N101', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.26, vk_percent=22.621494203522456, pfe_kw=0, i0_percent=0.0, tap_min=3, tap_max=3, tap_step_percent=1, tap_pos=3,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
+N3N101=pp.create_transformer_from_parameters(net, hv_bus=N3, lv_bus=N101, sn_mva=550.0, name='N3N101', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.26, vk_percent=22.621494203522456, pfe_kw=0, i0_percent=0.0, tap_min=3, tap_max=3, tap_step_percent=1, tap_pos=3,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N7, lv_bus=N105, sn_mva=550.0, name='N7N105', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.26, vk_percent=22.621494203522456, pfe_kw=0, i0_percent=0.0, tap_min=7, tap_max=7, tap_step_percent=1, tap_pos=7,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N4, lv_bus=N102, sn_mva=550.0, name='N4N102', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.416, vk_percent=24.542525888750735, pfe_kw=0, i0_percent=0.0, tap_min=14, tap_max=14, tap_step_percent=1, tap_pos=14,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
-pp.create_transformer_from_parameters(net, hv_bus=N5, lv_bus=N106, sn_mva=550.0, name='N5N106', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.151, vk_percent=11.596983099065032, pfe_kw=0, i0_percent=0.0, tap_min=6, tap_max=6, tap_step_percent=1, tap_pos=6,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)#4
+N5N106=pp.create_transformer_from_parameters(net, hv_bus=N5, lv_bus=N106, sn_mva=550.0, name='N5N106', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.151, vk_percent=11.596983099065032, pfe_kw=0, i0_percent=0.0, tap_min=6, tap_max=6, tap_step_percent=1, tap_pos=6,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)#4
 pp.create_transformer_from_parameters(net, hv_bus=N6, lv_bus=N104, sn_mva=550.0, name='N6N104', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.146, vk_percent=11.440931605424446, pfe_kw=0, i0_percent=0.0, tap_min=2, tap_max=2, tap_step_percent=1, tap_pos=2,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N1, lv_bus=M1, sn_mva=1000.0, name='M1N1', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=20.0, vkr_percent=0.23, vk_percent=10.702471677140752, pfe_kw=0, i0_percent=0.0, tap_min=8, tap_max=8, tap_step_percent=1, tap_pos=8,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N1, lv_bus=M2, sn_mva=1000.0, name='M2N1', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=20.0, vkr_percent=0.117, vk_percent=9.854694566550501, pfe_kw=0, i0_percent=0.0, tap_min=6, tap_max=6, tap_step_percent=1, tap_pos=6,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
@@ -216,7 +216,7 @@ Snom = net.sn_mva*10**6
 line_num = N6N4
 bus_numFrom =24
 bus_numTo =25
-trafo_num = 4
+trafo_num = N5N106
 ###############################################################
 #Q1
 R = net.line.r_ohm_per_km[line_num]
@@ -249,13 +249,13 @@ Qloss = np.imag(Sloss)
 ###############################################################
 #Q3 
 Zc = np.sqrt(Z/YC)
-Sn = Vg_nom**2/ np.conjugate(Zc)
+Sn = Vg**2/ np.conjugate(Zc)
 
 ###############################################################
 #Q4 
-Snnominal = np.abs(Sn)
-IN6_max = Snom /(np.abs(VN6))
-IN4_max = Snom /(np.abs(VN4))
+
+IN6_max = np.abs(Sn) /(np.abs(VN6))
+IN4_max = np.abs(Sn) /(np.abs(VN4))
 
 percentageI6 = np.abs(IN6)/IN6_max
 percentageI4 = np.abs(IN4)/IN4_max
@@ -263,49 +263,54 @@ percentageI4 = np.abs(IN4)/IN4_max
 ###############################################################
 #Q5
 ##Not working 
-St_nom = net.trafo.sn_mva[trafo_num]
-
-anglet = net.trafo.shift_degree[trafo_num]
-
-
-
-zk = net.trafo.vk_percent[trafo_num]/100 * Snom/10**6/St_nom
-rk = net.trafo.vkr_percent[trafo_num] /100 * Snom/10**6/St_nom
-xk = np.sqrt(zk**2 - rk**2)
-"""
-print("R_pu = {:.6f} [p.u.]".format(rk))
-print("Z_pu = {:.3f} [p.u.]".format(zk))
-print("X_pu = {:.3f} [p.u.]".format(xk))
-"""
-
-
-
-
-n = net.trafo.vn_hv_kv[trafo_num]/net.trafo.vn_lv_kv[trafo_num] * net.bus.vn_kv[N106]/net.bus.vn_kv[N5]
-#print("n_pu = {:.3f} [p.u.]".format(n))
-
-tra_num = 4
 
 """
 res_trafo et res_bus pour kv et angle sont les mêmes 
 """
+"""
+St_nom = net.trafo.sn_mva[trafo_num]*10**6 
 
-VHphase = np.cos(net.res_trafo.va_hv_degree[tra_num]/180*np.pi) + 1.j * np.sin(net.res_trafo.va_hv_degree[tra_num]/180*np.pi)
-VLphase = np.cos(net.res_trafo.va_lv_degree[tra_num]/180*np.pi) + 1.j * np.sin(net.res_trafo.va_lv_degree[tra_num]/180*np.pi)
-VHmagpu = net.res_trafo.vm_hv_pu[tra_num]
-VLmagpu = net.res_trafo.vm_lv_pu[tra_num]
-"""
-print("{:.3f}".format(net.res_trafo.va_hv_degree[tra_num]))
-print("{:.3f}".format(net.res_trafo.va_lv_degree[tra_num]))
-print("{:.3f}".format(VHmagpu))
-print("{:.3f}".format(VLmagpu))
-"""
+z = net.trafo.vk_percent[trafo_num]/100 
+print(z)
+rk = net.trafo.vkr_percent[trafo_num] /100
+xk = np.sqrt(z**2 - rk**2)
+Zk = rk + 1.j *xk 
+n = 1 + (net.trafo.tap_pos[trafo_num]-net.trafo.tap_neutral[trafo_num])* net.trafo.tap_step_percent[trafo_num]/100
+
+print(xk)
+print("n = {:.3f} [p.u.]".format(n))
+print("Z = {:.3f} [p.u.]".format(Zk))
+VHphase = np.cos(net.res_trafo.va_hv_degree[trafo_num]/180*np.pi) + 1.j * np.sin(net.res_trafo.va_hv_degree[trafo_num]/180*np.pi)
+VLphase = np.cos(net.res_trafo.va_lv_degree[trafo_num]/180*np.pi) + 1.j * np.sin(net.res_trafo.va_lv_degree[trafo_num]/180*np.pi)
+VHmagpu = net.res_trafo.vm_hv_pu[trafo_num]
+VLmagpu = net.res_trafo.vm_lv_pu[trafo_num]
+
+VHpu = VHmagpu * VHphase
+VLpu = VLmagpu * VLphase
+print("Voltage at N5 = {:.3f} < {:.3f} [p.u.]".format(np.abs(VHpu),np.angle(VHpu)*180/np.pi))
+print("Voltage at N106 = {:.3f} < {:.3f} [p.u.]".format(np.abs(VLpu),np.angle(VLpu)/np.pi*180))
+VH0pu = VLpu / n
+print("Voltage at N50 = {:.3f} < {:.3f} [p.u.]".format(np.abs(VH0pu),np.angle(VH0pu)*180/np.pi))
+
+IHpu = (VHpu - VLpu/n)/Zk
+ILpu = - IHpu/n
+print("Current at N5 = {:.3f} < {:.3f} [p.u.]".format(np.abs(IHpu), np.angle(IHpu)/np.pi*180))
+print("Current at N106 = {:.3f} < {:.3f} [p.u.]".format(np.abs(ILpu), np.angle(ILpu)/np.pi*180))
+
+SHV = VHpu * np.conjugate(ILpu) * Snom
+SLV = VLpu * np.conjugate(ILpu) * Snom
 #N5 high voltage and N106 low voltage 
-High_num = N5
-Low_num = N106
 
-V5pu =VHmagpu * VHphase
-V106pu = VLmagpu * VLphase
+print("Power of N5 = {:.3f} [MVA]".format(SHV/10**6))
+print("Power of N106 = {:.3f} [MVA]".format(SLV/10**6))
+
+print("Simulation")
+#print("Current of N5 = {:.3f} + {:.3f}j [MVA]".format(net.res_trafo.p_hv_mw[trafo_num],net.res_trafo.q_hv_mvar[trafo_num]))
+#print("Current power of N106 = {:.3f} + {:.3f}j [MVA]".format(net.res_trafo.p_lv_mw[trafo_num],net.res_trafo.q_lv_mvar[trafo_num]))
+
+print("Power of N5 = {:.3f} + {:.3f}j [MVA]".format(net.res_trafo.p_hv_mw[trafo_num],net.res_trafo.q_hv_mvar[trafo_num]))
+print("Power of N106 = {:.3f} + {:.3f}j [MVA]".format(net.res_trafo.p_lv_mw[trafo_num],net.res_trafo.q_lv_mvar[trafo_num]))
+"""
 """
 print("{:.3f}".format(V5pu))
 print("{:.3f}".format(V106pu))
@@ -322,8 +327,6 @@ SN5 = VN5pu * np.conjugate(IN5pu) * VN5ref
 SN106 = VN106pu * np.conjugate(IN106pu) * VN106ref
 """
 #print(SN5/10**6, SN6/10**6)
-#print(net.res_trafo.p_hv_mw[tra_num],net.res_trafo.q_hv_mvar[tra_num])
-#print(net.res_trafo.p_lv_mw[tra_num],net.res_trafo.q_lv_mvar[tra_num])
 
 
 ###############################################################
@@ -393,6 +396,3 @@ print("Theoritical results:")
 print("Q_shunt = {:.3f} MVAr, fp = {:.3f}".format(Qshunt/10**6,fpwithshunt))
 print("Simulation results:")
 print("Q_shunt = {:.3f} MVAr, fp = {:.3f}".format(Qshuntsimu/10**6,fpwithshuntsimu))
-
-
-
