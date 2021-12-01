@@ -105,7 +105,7 @@ pp.create_line_from_parameters(net, from_bus= N106, to_bus= N105, name="'N106N10
 pp.create_line_from_parameters(net, from_bus= N104, to_bus= N105, name="'N104N105", length_km=1, r_ohm_per_km=1.395, x_ohm_per_km=6.75, max_i_ka=1.347151, c_nf_per_km=141.469645815524, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(2,-2),(5,-2)])
 pp.create_line_from_parameters(net, from_bus= N104, to_bus= N103, name="'N104N103", length_km=1, r_ohm_per_km=1.395, x_ohm_per_km=6.75, max_i_ka=1.347151, c_nf_per_km=141.469645815524, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(2,-2),(4.5,1)])
 pp.create_line_from_parameters(net, from_bus= N13, to_bus= N14, name="'N13N14", length_km=1, r_ohm_per_km=3.148, x_ohm_per_km=33.342, max_i_ka=2.051113, c_nf_per_km=636.180504724648, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(5,-4),(6,-4)])
-pp.create_line_from_parameters(net, from_bus= N11, to_bus= N12, name="'N11N12", length_km=1, r_ohm_per_km=1.819, x_ohm_per_km=19.22, max_i_ka=2.051113, c_nf_per_km=597.384895796567, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(0,-4),(0,-3)])
+N11N12=pp.create_line_from_parameters(net, from_bus= N11, to_bus= N12, name="'N11N12", length_km=1, r_ohm_per_km=1.819, x_ohm_per_km=19.22, max_i_ka=2.051113, c_nf_per_km=597.384895796567, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(0,-4),(0,-3)])
 
 # list of Transformers:
 pp.create_transformer_from_parameters(net, hv_bus=N2, lv_bus=N107, sn_mva=550.0, name='N2N107', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.312, vk_percent=22.72114224681497, pfe_kw=0, i0_percent=0.0, tap_min=8, tap_max=8, tap_step_percent=1, tap_pos=8,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
@@ -126,7 +126,7 @@ pp.create_transformer_from_parameters(net, hv_bus=N104, lv_bus=N203, sn_mva=500.
 pp.create_transformer_from_parameters(net, hv_bus=N103, lv_bus=N204, sn_mva=500.0, name="'N204N103'", vn_hv_kv=150.0, vn_lv_kv=15.0, vkr_percent=0.277, vk_percent=11.53832544176147, pfe_kw=0, i0_percent=0.0, tap_pos=0, tap_neutral=0, tap_step_percent=1.0, tap_side="lv", tap_min=-4, tap_max=20, in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N105, lv_bus=N205, sn_mva=500.0, name="'N205N105'", vn_hv_kv=150.0, vn_lv_kv=15.0, vkr_percent=0.283, vk_percent=11.785398296196867, pfe_kw=0, i0_percent=0.0, tap_pos=0, tap_neutral=0, tap_step_percent=1.0, tap_side="lv", tap_min=-4, tap_max=20, in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N106, lv_bus=N206, sn_mva=500.0, name="'N206N106'", vn_hv_kv=150.0, vn_lv_kv=15.0, vkr_percent=0.277, vk_percent=11.53832544176147, pfe_kw=0, i0_percent=0.0, tap_pos=0, tap_neutral=0, tap_step_percent=1.0, tap_side="lv", tap_min=-4, tap_max=20, in_service=True,max_loading_percent = load_max)
-pp.create_transformer_from_parameters(net, hv_bus=N107, lv_bus=N207, sn_mva=500.0, name="'N207N107'", vn_hv_kv=150.0, vn_lv_kv=15.0, vkr_percent=0.277, vk_percent=11.53832544176147, pfe_kw=0, i0_percent=0.0, tap_pos=0, tap_neutral=0, tap_step_percent=1.0, tap_side="lv", tap_min=-4, tap_max=20, in_service=True,max_loading_percent = load_max)
+N207N107=pp.create_transformer_from_parameters(net, hv_bus=N107, lv_bus=N207, sn_mva=500.0, name="'N207N107'", vn_hv_kv=150.0, vn_lv_kv=15.0, vkr_percent=0.277, vk_percent=11.53832544176147, pfe_kw=0, i0_percent=0.0, tap_pos=0, tap_neutral=0, tap_step_percent=1.0, tap_side="lv", tap_min=-4, tap_max=20, in_service=True,max_loading_percent = load_max)
 
 # list of Generators:
 G1 = pp.create_gen(net, p_mw=700.0, max_q_mvar=638.58, min_q_mvar=-250.0, sn_mva=1000.0, bus=M1, vm_pu=0.99958, name="M1", slack=False, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
@@ -154,3 +154,50 @@ Create the constraints here
 Launch the right routine too
 
 """
+pp.create_poly_cost(net,G1,'gen',cp2_eur_per_mw2 = 0.001, cp1_eur_per_mw = -0.7, cp0_eur = 142.5)
+pp.create_poly_cost(net,G2,'gen',cp2_eur_per_mw2 = 4.622 * 10**(-4), cp1_eur_per_mw =-0.34665, cp0_eur = 89.996875)
+pp.create_poly_cost(net,G3,'gen',cp2_eur_per_mw2 = 5.625 * 10**(-4), cp1_eur_per_mw = - 0.45, cp0_eur = 120)
+pp.create_poly_cost(net,G4,'gen',cp2_eur_per_mw2 = 9.876 * 10**(-5), cp1_eur_per_mw = -0.088884, cp0_eur= 59.9989)
+pp.create_poly_cost(net,G5,'gen',cp2_eur_per_mw2 = 2.8 * 10**(-4), cp1_eur_per_mw = -0.28, cp0_eur= 80)
+pp.create_poly_cost(net,G6,'gen',cp2_eur_per_mw2 = 2.81 * 10**(-4), cp1_eur_per_mw = -0.3091, cp0_eur= 90.0025)
+pp.create_poly_cost(net,G7,'gen',cp2_eur_per_mw2 = 3.024 * 10**(-5), cp1_eur_per_mw = -0.034776, cp0_eur= 24.9981)
+pp.create_poly_cost(net,G8,'gen',cp2_eur_per_mw2 = 5.555 * 10**(-4), cp1_eur_per_mw = -0.6666, cp0_eur= 234.98)
+
+pp.runopp(net)
+pf_res_plotly(net, aspectratio=(1,1)); 
+
+
+
+print("--------------------------------")
+print("Q6.3.1")
+print(net.res_gen.p_mw)
+
+p=0
+q=0
+for i in range(G8+1):
+    p+= net.res_gen.p_mw[i]
+    q+= net.res_gen.q_mvar[i]
+
+ploss = 0
+qloss = 0
+for i in range(N207N107+1 ):
+    ploss += net.res_trafo.pl_mw[i]
+    qloss += net.res_trafo.ql_mvar[i]
+
+for i in range(N11N12+1):
+    ploss += net.res_line.pl_mw[i]
+    qloss += net.res_line.ql_mvar[i]
+
+pgen =0
+qgen=0
+for i in range(LOAD_N204+1):
+    pgen+=net.res_load.p_mw[i]
+    qgen+=net.res_load.q_mvar[i]
+
+print("Total active power produced = {:.3f} [MW]".format(p))
+print("Total reactive power produced = {:.3f} [MVAr]".format(q))
+print("Total active power losses = {:.3f} [MW]".format(ploss))
+print("Total reactive power losses = {:.3f} [MVAr]".format(qloss))
+
+print("Total active power of the loads = {:.3f} [MW]".format(pgen))
+print("Total reactive power of the loads = {:.3f} [MVAr]".format(qgen))
