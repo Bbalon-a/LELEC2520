@@ -154,16 +154,39 @@ Create the constraints here
 Launch the right routine too
 
 """
-pp.create_poly_cost(net,G1,'gen',cp2_eur_per_mw2 = 0.001, cp1_eur_per_mw = -0.7, cp0_eur = 142.5)
-pp.create_poly_cost(net,G2,'gen',cp2_eur_per_mw2 = 4.622 * 10**(-4), cp1_eur_per_mw =-0.34665, cp0_eur = 89.996875)
-pp.create_poly_cost(net,G3,'gen',cp2_eur_per_mw2 = 5.625 * 10**(-4), cp1_eur_per_mw = - 0.45, cp0_eur = 120)
-pp.create_poly_cost(net,G4,'gen',cp2_eur_per_mw2 = 9.876 * 10**(-5), cp1_eur_per_mw = -0.088884, cp0_eur= 59.9989)
-pp.create_poly_cost(net,G5,'gen',cp2_eur_per_mw2 = 2.8 * 10**(-4), cp1_eur_per_mw = -0.28, cp0_eur= 80)
-pp.create_poly_cost(net,G6,'gen',cp2_eur_per_mw2 = 2.81 * 10**(-4), cp1_eur_per_mw = -0.3091, cp0_eur= 90.0025)
-pp.create_poly_cost(net,G7,'gen',cp2_eur_per_mw2 = 3.024 * 10**(-5), cp1_eur_per_mw = -0.034776, cp0_eur= 24.9981)
-pp.create_poly_cost(net,G8,'gen',cp2_eur_per_mw2 = 5.555 * 10**(-4), cp1_eur_per_mw = -0.6666, cp0_eur= 234.98)
+Q6_2 = False
+Q6_3 = True
 
-pp.runopp(net)
+if(Q6_2):
+    pp.create_poly_cost(net,G7,'gen',cp2_eur_per_mw2 = 0.001, cp1_eur_per_mw = -0.7, cp0_eur = 142.5)
+    pp.create_poly_cost(net,G6,'gen',cp2_eur_per_mw2 = 4.622 * 10**(-4), cp1_eur_per_mw =-0.34665, cp0_eur = 89.996875)
+    pp.create_poly_cost(net,G3,'gen',cp2_eur_per_mw2 = 5.625 * 10**(-4), cp1_eur_per_mw = - 0.45, cp0_eur = 120)
+    pp.create_poly_cost(net,G2,'gen',cp2_eur_per_mw2 = 9.876 * 10**(-5), cp1_eur_per_mw = -0.088884, cp0_eur= 59.9989)
+    pp.create_poly_cost(net,G8,'gen',cp2_eur_per_mw2 = 2.8 * 10**(-4), cp1_eur_per_mw = -0.28, cp0_eur= 80)
+    pp.create_poly_cost(net,G4,'gen',cp2_eur_per_mw2 = 2.81 * 10**(-4), cp1_eur_per_mw = -0.3091, cp0_eur= 90.0025)
+    pp.create_poly_cost(net,G1,'gen',cp2_eur_per_mw2 = 3.024 * 10**(-5), cp1_eur_per_mw = -0.034776, cp0_eur= 24.9981)
+    pp.create_poly_cost(net,G5,'gen',cp2_eur_per_mw2 = 5.555 * 10**(-4), cp1_eur_per_mw = -0.6666, cp0_eur= 234.98)
+elif( not(Q6_2) & Q6_3):
+    pp.create_poly_cost(net,G8,'gen',cp2_eur_per_mw2 = 0.001, cp1_eur_per_mw = -0.7, cp0_eur = 142.5)
+    pp.create_poly_cost(net,G5,'gen',cp2_eur_per_mw2 = 4.622 * 10**(-4), cp1_eur_per_mw =-0.34665, cp0_eur = 89.996875)
+    pp.create_poly_cost(net,G3,'gen',cp2_eur_per_mw2 = 5.625 * 10**(-4), cp1_eur_per_mw = - 0.45, cp0_eur = 120)
+    pp.create_poly_cost(net,G4,'gen',cp2_eur_per_mw2 = 9.876 * 10**(-5), cp1_eur_per_mw = -0.088884, cp0_eur= 59.9989)
+    pp.create_poly_cost(net,G7,'gen',cp2_eur_per_mw2 = 2.8 * 10**(-4), cp1_eur_per_mw = -0.28, cp0_eur= 80)
+    pp.create_poly_cost(net,G6,'gen',cp2_eur_per_mw2 = 2.81 * 10**(-4), cp1_eur_per_mw = -0.3091, cp0_eur= 90.0025)
+    pp.create_poly_cost(net,G2,'gen',cp2_eur_per_mw2 = 3.024 * 10**(-5), cp1_eur_per_mw = -0.034776, cp0_eur= 24.9981)
+    pp.create_poly_cost(net,G1,'gen',cp2_eur_per_mw2 = 5.555 * 10**(-4), cp1_eur_per_mw = -0.6666, cp0_eur= 234.98)
+
+else:
+    pp.create_poly_cost(net,G1,'gen',cp2_eur_per_mw2 = 0.001, cp1_eur_per_mw = -0.7, cp0_eur = 142.5)
+    pp.create_poly_cost(net,G2,'gen',cp2_eur_per_mw2 = 4.622 * 10**(-4), cp1_eur_per_mw =-0.34665, cp0_eur = 89.996875)
+    pp.create_poly_cost(net,G3,'gen',cp2_eur_per_mw2 = 5.625 * 10**(-4), cp1_eur_per_mw = - 0.45, cp0_eur = 120)
+    pp.create_poly_cost(net,G4,'gen',cp2_eur_per_mw2 = 9.876 * 10**(-5), cp1_eur_per_mw = -0.088884, cp0_eur= 59.9989)
+    pp.create_poly_cost(net,G5,'gen',cp2_eur_per_mw2 = 2.8 * 10**(-4), cp1_eur_per_mw = -0.28, cp0_eur= 80)
+    pp.create_poly_cost(net,G6,'gen',cp2_eur_per_mw2 = 2.81 * 10**(-4), cp1_eur_per_mw = -0.3091, cp0_eur= 90.0025)
+    pp.create_poly_cost(net,G7,'gen',cp2_eur_per_mw2 = 3.024 * 10**(-5), cp1_eur_per_mw = -0.034776, cp0_eur= 24.9981)
+    pp.create_poly_cost(net,G8,'gen',cp2_eur_per_mw2 = 5.555 * 10**(-4), cp1_eur_per_mw = -0.6666, cp0_eur= 234.98)
+
+pp.runopp(net,verbose=False)
 pf_res_plotly(net, aspectratio=(1,1)); 
 
 
@@ -171,18 +194,53 @@ pf_res_plotly(net, aspectratio=(1,1));
 print("--------------------------------")
 print("Q6.3.1")
 print(net.res_gen.p_mw)
-
+cost =0
 p=0
 q=0
+if(Q6_2):
+    cost+= 0.001 * (net.res_gen.p_mw[G7]-350)**2 +20
+    cost+= 4.622 * 10**(-4) * (net.res_gen.p_mw[G6]-375)**2 +25
+    cost+= 5.625 * 10**(-4) * (net.res_gen.p_mw[G3]-400)**2 +30
+    cost+= 9.876 * 10**(-5) * (net.res_gen.p_mw[G2]-450)**2 +40
+    cost+= 2.8 * 10**(-4) * (net.res_gen.p_mw[G8]-500)**2 +10
+    cost+= 2.81 * 10**(-4) * (net.res_gen.p_mw[G4]-550)**2 + 5
+    cost+= 3.024 * 10**(-5) * (net.res_gen.p_mw[G1]-575)**2 + 15
+    cost+= 5.555 * 10**(-4) * (net.res_gen.p_mw[G5]-600)**2 + 35
+elif( not(Q6_2) & Q6_3):
+    cost+= 0.001 * (net.res_gen.p_mw[G8]-350)**2 +20
+    cost+= 4.622 * 10**(-4) * (net.res_gen.p_mw[G5]-375)**2 +25
+    cost+= 5.625 * 10**(-4) * (net.res_gen.p_mw[G3]-400)**2 +30
+    cost+= 9.876 * 10**(-5) * (net.res_gen.p_mw[G4]-450)**2 +40
+    cost+= 2.8 * 10**(-4) * (net.res_gen.p_mw[G7]-500)**2 +10
+    cost+= 2.81 * 10**(-4) * (net.res_gen.p_mw[G6]-550)**2 + 5
+    cost+= 3.024 * 10**(-5) * (net.res_gen.p_mw[G2]-575)**2 + 15
+    cost+= 5.555 * 10**(-4) * (net.res_gen.p_mw[G1]-600)**2 + 35
+
+else:
+    cost+= 0.001 * (net.res_gen.p_mw[G1]-350)**2 +20
+    cost+= 4.622 * 10**(-4) * (net.res_gen.p_mw[G2]-375)**2 +25
+    cost+= 5.625 * 10**(-4) * (net.res_gen.p_mw[G3]-400)**2 +30
+    cost+= 9.876 * 10**(-5) * (net.res_gen.p_mw[G4]-450)**2 +40
+    cost+= 2.8 * 10**(-4) * (net.res_gen.p_mw[G5]-500)**2 +10
+    cost+= 2.81 * 10**(-4) * (net.res_gen.p_mw[G6]-550)**2 + 5
+    cost+= 3.024 * 10**(-5) * (net.res_gen.p_mw[G7]-575)**2 + 15
+    cost+= 5.555 * 10**(-4) * (net.res_gen.p_mw[G8]-600)**2 + 35
+
+
+
+print(cost)
+
+
 for i in range(G8+1):
     p+= net.res_gen.p_mw[i]
     q+= net.res_gen.q_mvar[i]
-
+    
 ploss = 0
 qloss = 0
 for i in range(N207N107+1 ):
     ploss += net.res_trafo.pl_mw[i]
     qloss += net.res_trafo.ql_mvar[i]
+ 
 
 for i in range(N11N12+1):
     ploss += net.res_line.pl_mw[i]
