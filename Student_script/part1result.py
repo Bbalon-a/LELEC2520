@@ -182,6 +182,7 @@ G8=pp.create_gen(net, p_mw=174.0, max_q_mvar=9999.0, min_q_mvar=-999.0, sn_mva=1
 # tid (int) = ID of the trafo that is controlled
 # vm_lower_pu (float) = Lower voltage limit in pu
 # vm_upper_pu (float) - Upper voltage limit in pu
+# regarder ce que font les controllers 
 
 ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,12, 1.01,1.021, order = 0)
 ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,13, 1.01,1.021, order = 0)
@@ -396,3 +397,5 @@ print("Theoritical results:")
 print("Q_shunt = {:.3f} MVAr, fp = {:.3f}".format(Qshunt/10**6,fpwithshunt))
 print("Simulation results:")
 print("Q_shunt = {:.3f} MVAr, fp = {:.3f}".format(Qshuntsimu/10**6,fpwithshuntsimu))
+
+#print(net.res_trafo.vm_lv_pu)
