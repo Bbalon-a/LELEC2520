@@ -63,7 +63,7 @@ LOAD_N202 = pp.create_load(net, bus=N202, p_mw=360.0, q_mvar=180.0, name="N202",
 LOAD_N205 = pp.create_load(net, bus=N205, p_mw=360.0, q_mvar=180.0, name="N205", in_service=True, max_p_mw=360., min_p_mw=360., max_q_mvar=180., min_q_mvar=180., controllable = True)
 LOAD_N201 = pp.create_load(net, bus=N201, p_mw=360.0, q_mvar=180.0, name="N201", in_service=True, max_p_mw=360., min_p_mw=360., max_q_mvar=180., min_q_mvar=180., controllable = True)
 LOAD_N207 = pp.create_load(net, bus=N207, p_mw=360.0, q_mvar=180.0, name="N207", in_service=True, max_p_mw=360., min_p_mw=360., max_q_mvar=180., min_q_mvar=180., controllable = True)
-LOAD_N204 = pp.create_load(net, bus=N204, p_mw=360.0*2, q_mvar=180.0, name="N204", in_service=True, max_p_mw=360. *2 , min_p_mw=360., max_q_mvar=180., min_q_mvar=180., controllable = True)
+LOAD_N204 = pp.create_load(net, bus=N204, p_mw=360.0*augmentation_factor, q_mvar=180.0, name="N204", in_service=True, max_p_mw=360. *augmentation_factor , min_p_mw=360., max_q_mvar=180., min_q_mvar=180., controllable = True)
 
 
 
@@ -167,11 +167,12 @@ pp.create_poly_cost(net,G8,'gen',cp1_eur_per_mw=1)
 
 pp.create_poly_cost(net, LOAD_N204, 'load', cp1_eur_per_mw=-1)
 
-pp.create_pwl_cost(net, LOAD_N204, "load", [[net.load.min_p_mw.at[0], net.load.max_p_mw.at[0], -1]])
+pp.create_pwl_cost(net, LOAD_N204, "load", [[net.load.min_p_mw.at[LOAD_N204], net.load.max_p_mw.at[LOAD_N204], -1]])
 
 
 pp.runopp(net)
-pf_res_plotly(net, aspectratio=(1,1)); 
+#pf_res_plotly(net, aspectratio=(1,1)); 
+print(net.res_load.p_mw[LOAD_N204])
 p=0
 q=0
 for i in range(G8+1):
