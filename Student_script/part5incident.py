@@ -14,10 +14,9 @@ load_max = 100.
     
 # list of Buses
 M1 = pp.create_bus(net, vn_kv=20.0, name="M1", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (1.5,4))
+
 M2 = pp.create_bus(net, vn_kv=20.0, name="M2", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (3,4))
-
-M3 = pp.create_bus(net, vn_kv=20.0, name="M3", in_service=False, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (0,0))
-
+M3 = pp.create_bus(net, vn_kv=20.0, name="M3", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (0,0))
 M4 = pp.create_bus(net, vn_kv=20.0, name="M4", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (4,0))
 M5 = pp.create_bus(net, vn_kv=20.0, name="M5", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (4.5,-3))
 M6 = pp.create_bus(net, vn_kv=20.0, name="M6", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (1,-5))
@@ -118,13 +117,13 @@ pp.create_transformer_from_parameters(net, hv_bus=N7, lv_bus=N105, sn_mva=550.0,
 pp.create_transformer_from_parameters(net, hv_bus=N4, lv_bus=N102, sn_mva=550.0, name='N4N102', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.416, vk_percent=24.542525888750735, pfe_kw=0, i0_percent=0.0, tap_min=14, tap_max=14, tap_step_percent=1, tap_pos=14,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N5, lv_bus=N106, sn_mva=550.0, name='N5N106', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.151, vk_percent=11.596983099065032, pfe_kw=0, i0_percent=0.0, tap_min=6, tap_max=6, tap_step_percent=1, tap_pos=6,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N6, lv_bus=N104, sn_mva=550.0, name='N6N104', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.146, vk_percent=11.440931605424446, pfe_kw=0, i0_percent=0.0, tap_min=2, tap_max=2, tap_step_percent=1, tap_pos=2,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
+
 pp.create_transformer_from_parameters(net, hv_bus=N1, lv_bus=M1, sn_mva=1000.0, name='M1N1', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=20.0, vkr_percent=0.23, vk_percent=10.702471677140752, pfe_kw=0, i0_percent=0.0, tap_min=8, tap_max=8, tap_step_percent=1, tap_pos=8,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
+
 pp.create_transformer_from_parameters(net, hv_bus=N1, lv_bus=M2, sn_mva=1000.0, name='M2N1', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=20.0, vkr_percent=0.117, vk_percent=9.854694566550501, pfe_kw=0, i0_percent=0.0, tap_min=6, tap_max=6, tap_step_percent=1, tap_pos=6,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N10, lv_bus=M6, sn_mva=1000.0, name='M6N10', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=20.0, vkr_percent=0.25, vk_percent=13.002403623945844, pfe_kw=0, i0_percent=0.0, tap_min=10, tap_max=10, tap_step_percent=1, tap_pos=10,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N105, lv_bus=M5, sn_mva=500.0, name='M5N105', shift_degree=0.0, vn_hv_kv=150.0, vn_lv_kv=20.0, vkr_percent=0.25, vk_percent=13.002403623945844, pfe_kw=0, i0_percent=0.0, tap_min=10, tap_max=10, tap_step_percent=1, tap_pos=10,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
-
-pp.create_transformer_from_parameters(net, hv_bus=N101, lv_bus=M3, sn_mva=500.0, name='M3N101', shift_degree=0.0, vn_hv_kv=150.0, vn_lv_kv=20.0, vkr_percent=0.25, vk_percent=13.002403623945844, pfe_kw=0, i0_percent=0.0, tap_min=10, tap_max=10, tap_step_percent=1, tap_pos=10,tap_neutral=0, tap_side="hv", in_service=False,max_loading_percent = load_max)
-
+pp.create_transformer_from_parameters(net, hv_bus=N101, lv_bus=M3, sn_mva=500.0, name='M3N101', shift_degree=0.0, vn_hv_kv=150.0, vn_lv_kv=20.0, vkr_percent=0.25, vk_percent=13.002403623945844, pfe_kw=0, i0_percent=0.0, tap_min=10, tap_max=10, tap_step_percent=1, tap_pos=10,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N103, lv_bus=M4, sn_mva=350.0, name='M4N103', shift_degree=0.0, vn_hv_kv=150.0, vn_lv_kv=20.0, vkr_percent=0.25, vk_percent=13.002403623945844, pfe_kw=0, i0_percent=0.0, tap_min=10, tap_max=10, tap_step_percent=1, tap_pos=10,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N101, lv_bus=N201, sn_mva=500.0, name="'N201N101'", vn_hv_kv=150.0, vn_lv_kv=15.0, vkr_percent=0.277, vk_percent=11.53832544176147, pfe_kw=0, i0_percent=0.0, tap_pos=0, tap_neutral=0, tap_step_percent=1.0, tap_side="lv", tap_min=-4, tap_max=20, in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N102, lv_bus=N202, sn_mva=500.0, name="'N202N102'", vn_hv_kv=150.0, vn_lv_kv=15.0, vkr_percent=0.271, vk_percent=11.298250572544406, pfe_kw=0, i0_percent=0.0, tap_pos=0, tap_neutral=0, tap_step_percent=1.0, tap_side="lv", tap_min=-4, tap_max=20, in_service=True,max_loading_percent = load_max)
@@ -135,11 +134,9 @@ pp.create_transformer_from_parameters(net, hv_bus=N106, lv_bus=N206, sn_mva=500.
 pp.create_transformer_from_parameters(net, hv_bus=N107, lv_bus=N207, sn_mva=500.0, name="'N207N107'", vn_hv_kv=150.0, vn_lv_kv=15.0, vkr_percent=0.277, vk_percent=11.53832544176147, pfe_kw=0, i0_percent=0.0, tap_pos=0, tap_neutral=0, tap_step_percent=1.0, tap_side="lv", tap_min=-4, tap_max=20, in_service=True,max_loading_percent = load_max)
 
 # list of Generators:
-G1 = pp.create_gen(net, p_mw=700.0, max_q_mvar=638.58, min_q_mvar=-250.0, sn_mva=1000.0, bus=M1, vm_pu=0.99958, name="M1", slack=False, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
+G1 = pp.create_gen(net, p_mw=700.0, max_q_mvar=638.58, min_q_mvar=-250.0, sn_mva=1000.0, bus=M1, vm_pu=0.99958, name="M1", slack=False, in_service=False, min_p_mw=0., max_p_mw=850., controllable = True)
 G2 = pp.create_gen(net, p_mw=600.0, max_q_mvar=696.53, min_q_mvar=-250.0, sn_mva=1000.0, bus=M2, vm_pu=0.99958, name="M2", slack=False, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
-
-G3=pp.create_gen(net, p_mw=375.0, max_q_mvar=220.83, min_q_mvar=-50.0, sn_mva=450.00, bus=M3, vm_pu=0.99000, name="M3", slack=False, in_service=False, min_p_mw=0., max_p_mw=405., controllable = True)
-
+G3=pp.create_gen(net, p_mw=375.0, max_q_mvar=220.83, min_q_mvar=-50.0, sn_mva=450.00, bus=M3, vm_pu=0.99000, name="M3", slack=False, in_service=True, min_p_mw=0., max_p_mw=405., controllable = True)
 G4=pp.create_gen(net, p_mw=250.0, max_q_mvar=143.76, min_q_mvar=-50.0, sn_mva=300.00, bus=M4, vm_pu=0.97580, name="M4", slack=False, in_service=True, min_p_mw=0., max_p_mw=270., controllable = True)
 G5=pp.create_gen(net, p_mw=375.0, max_q_mvar=220.97, min_q_mvar=-50.0, sn_mva=450.00, bus=M5, vm_pu=0.99040, name="M5", slack=False, in_service=True, min_p_mw=0., max_p_mw=405., controllable = True)
 G6=pp.create_gen(net, p_mw=804.0, max_q_mvar=572.16, min_q_mvar=-250.0, sn_mva=1000.0, bus=M6, vm_pu=1.0100, name="M6", slack=True, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
@@ -154,16 +151,17 @@ G8=pp.create_gen(net, p_mw=174.0, max_q_mvar=9999.0, min_q_mvar=-999.0, sn_mva=1
 
 #in_service (bool, True) - Indicates if the controller is currently in_service
 
-ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,12, 1.01,1.021, order = 0, in_service = True)
-ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,13, 1.01,1.021, order = 0, in_service = True)
-ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,14, 1.01,1.021, order = 0, in_service = True)
-ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,15, 1.01,1.021, order = 0, in_service = True)
-ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,16, 1.01,1.021, order = 0, in_service = True)
-ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,17, 1.01,1.021, order = 0, in_service = True)
-ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,18, 1.01,1.021, order = 0, in_service = True)
+ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,12, 1.01,1.021, order = 0)#, in_service = True)
+ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,13, 1.01,1.021, order = 0)#, in_service = True)
+ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,14, 1.01,1.021, order = 0)#, in_service = True)
+ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,15, 1.01,1.021, order = 0)#, in_service = True)
+ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,16, 1.01,1.021, order = 0)#, in_service = True)
+ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,17, 1.01,1.021, order = 0)#, in_service = True)
+ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,18, 1.01,1.021, order = 0)#, in_service = True)
 
 # code here
-pp.runpp(net,algorithm='nr', initrafo_model='pi',enforce_q_lims=True,max_iteration=2000, run_control=True) #pour utiliser les controllers
+ct.run_control(net)
+pp.runpp(net,algorithm='nr', initrafo_model='pi',enforce_q_lims=True,max_iteration=2000)#, run_control=True) #pour utiliser les controllers
 
 #print(net.res_gen.p_mw)
 #p_mw (float, default 0) - The active power of the generator (positive for generation!)
@@ -177,10 +175,12 @@ pp.runpp(net,algorithm='nr', initrafo_model='pi',enforce_q_lims=True,max_iterati
 # plots of system
 pf_res_plotly(net, aspectratio=(1,1));
 
-#print(net.res_line.p_to_mw)
+print(net.res_line.p_to_mw)
+print(net.res_line.p_from_mw)
 #print(net.res_trafo.p_lv_mw)
 #print(net.line.name)
 #print(net.trafo.name)
-print(net.res_trafo.vm_lv_pu)
+#print(net.res_trafo.vm_lv_pu)
+
 
 
