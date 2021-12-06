@@ -370,12 +370,12 @@ print("Transformater load = {:.3f} [%]".format(max(loadH, loadL)))
 print("Simulation Results:")
 print("Current at N5 = {:.3f} [kA]".format(net.res_trafo.i_hv_ka[trafo_num]))
 print("Current at N107 = {:.3f} [kA]".format(net.res_trafo.i_lv_ka[trafo_num]))
-print("Load = {:.3f} [%]".format(max(loadH, loadL)))
 print("Transformater load = {:.3f} [%]".format(net.res_trafo.loading_percent[trafo_num]))
 
 ###############################################################
 #Q8 
 
+import math
 shunt_num =11
 load_num =12
 QNshunt = net.shunt.q_mvar[shunt_num] *10**6
@@ -386,19 +386,22 @@ Qshunt = U204pu**2 * QNshunt
 
 Pload = net.load.p_mw[load_num] *10**6
 Qload = net.load.q_mvar[load_num] *10**6
-fpwithoutshunt = Pload /np.sqrt(Pload**2 +Qload*2)
+fpwithoutshunt = np.cos(math.atan(Qload/Pload))
 
-
-fpwithshunt = Pload/(np.sqrt(Pload**2 +(Qload-Qshunt)**2))
+fpwithshunt =  np.cos(math.atan((Qload+Qshunt)/Pload))
 
 Qshuntsimu = net.res_shunt.q_mvar[shunt_num] *10**6
-fpwithshuntsimu = Pload/(np.sqrt(Pload**2 +(Qload-Qshuntsimu)**2))
+fpwithshuntsimu =  np.cos(math.atan((Qload+Qshuntsimu)/Pload))
+
 print("-------------------------------------------------------")
 print("Q1.8")
-print("Without shunt compensation")
-print("Q_shunt = 0, fp = {:.3f}".format(fpwithoutshunt))
-print("With shunt compensation")
 print("Theoritical results:")
-print("Q_shunt = {:.3f} MVAr, fp = {:.3f}".format(Qshunt/10**6,fpwithshunt))
+print("Without shunt compensation:")
+print("Q_shunt = 0 [MVAr], fp = {:.3f}".format(fpwithoutshunt))
+print("With shunt compensation:")
+print("Q_shunt = {:.3f} [MVAr], fp = {:.3f}".format(Qshunt/10**6, fpwithshunt))
 print("Simulation results:")
-print("Q_shunt = {:.3f} MVAr, fp = {:.3f}".format(Qshuntsimu/10**6,fpwithshuntsimu))
+print("Without shunt compensation:")
+print("Q_shunt = 0 [MVAr], fp = {:.3f}".format(fpwithoutshunt))
+print("With shunt compensation:")
+print("Q_shunt = {:.3f} [MVAr], fp = {:.3f}".format(Qshuntsimu/10**6,fpwithshuntsimu))
