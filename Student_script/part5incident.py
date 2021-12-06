@@ -14,7 +14,6 @@ load_max = 100.
     
 # list of Buses
 M1 = pp.create_bus(net, vn_kv=20.0, name="M1", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (1.5,4))
-
 M2 = pp.create_bus(net, vn_kv=20.0, name="M2", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (3,4))
 M3 = pp.create_bus(net, vn_kv=20.0, name="M3", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (0,0))
 M4 = pp.create_bus(net, vn_kv=20.0, name="M4", in_service=True, max_vm_pu=vmax, min_vm_pu = vmin, controllable = True, geodata = (4,0))
@@ -135,6 +134,7 @@ pp.create_transformer_from_parameters(net, hv_bus=N107, lv_bus=N207, sn_mva=500.
 
 # list of Generators:
 G1 = pp.create_gen(net, p_mw=700.0, max_q_mvar=638.58, min_q_mvar=-250.0, sn_mva=1000.0, bus=M1, vm_pu=0.99958, name="M1", slack=False, in_service=False, min_p_mw=0., max_p_mw=850., controllable = True)
+
 G2 = pp.create_gen(net, p_mw=600.0, max_q_mvar=696.53, min_q_mvar=-250.0, sn_mva=1000.0, bus=M2, vm_pu=0.99958, name="M2", slack=False, in_service=True, min_p_mw=0., max_p_mw=850., controllable = True)
 G3=pp.create_gen(net, p_mw=375.0, max_q_mvar=220.83, min_q_mvar=-50.0, sn_mva=450.00, bus=M3, vm_pu=0.99000, name="M3", slack=False, in_service=True, min_p_mw=0., max_p_mw=405., controllable = True)
 G4=pp.create_gen(net, p_mw=250.0, max_q_mvar=143.76, min_q_mvar=-50.0, sn_mva=300.00, bus=M4, vm_pu=0.97580, name="M4", slack=False, in_service=True, min_p_mw=0., max_p_mw=270., controllable = True)
@@ -160,8 +160,10 @@ ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,17, 1.01,1.021, or
 ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,18, 1.01,1.021, order = 0)#, in_service = True)
 
 # code here
-ct.run_control(net)
-pp.runpp(net,algorithm='nr', initrafo_model='pi',enforce_q_lims=True,max_iteration=2000)#, run_control=True) #pour utiliser les controllers
+#ct.run_control(net)
+pp.runpp(net,algorithm='nr',enforce_q_lims=True,max_iteration=2000, run_control=True) #pour utiliser les controllers
+
+#, initrafo_model='pi'
 
 #print(net.res_gen.p_mw)
 #p_mw (float, default 0) - The active power of the generator (positive for generation!)
@@ -175,12 +177,12 @@ pp.runpp(net,algorithm='nr', initrafo_model='pi',enforce_q_lims=True,max_iterati
 # plots of system
 pf_res_plotly(net, aspectratio=(1,1));
 
-print(net.res_line.p_to_mw)
-print(net.res_line.p_from_mw)
+#print(net.res_line.p_to_mw)
+#print(net.res_line.p_from_mw)
 #print(net.res_trafo.p_lv_mw)
 #print(net.line.name)
 #print(net.trafo.name)
-#print(net.res_trafo.vm_lv_pu)
+print(net.res_trafo.vm_lv_pu)
 
 
 
