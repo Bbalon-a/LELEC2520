@@ -165,14 +165,15 @@ pp.create_poly_cost(net,G6,'gen',cp1_eur_per_mw=1)
 pp.create_poly_cost(net,G7,'gen',cp1_eur_per_mw=1)
 pp.create_poly_cost(net,G8,'gen',cp1_eur_per_mw=1)
 
-pp.create_poly_cost(net, LOAD_N204, 'load', cp1_eur_per_mw=-1000)
+Q6_2 = True
+if(Q6_2):
+    pp.create_poly_cost(net, LOAD_N204, 'load', cp1_eur_per_mw=-3)
 
-pp.create_pwl_cost(net, LOAD_N204, "load", [[net.load.min_p_mw.at[LOAD_N204], net.load.max_p_mw.at[LOAD_N204], -1]])
-
+#pp.create_pwl_cost(net, LOAD_N204, "load", [[net.load.min_p_mw.at[LOAD_N204], net.load.max_p_mw.at[LOAD_N204], -1]])
 
 pp.runopp(net)
-#pf_res_plotly(net, aspectratio=(1,1)); 
-print(net.res_load.p_mw[LOAD_N204])
+pf_res_plotly(net, aspectratio=(1,1)); 
+print("Active power at node N204 = {:.3f} [MW]".format(net.res_load.p_mw[LOAD_N204]))
 p=0
 q=0
 for i in range(G8+1):
