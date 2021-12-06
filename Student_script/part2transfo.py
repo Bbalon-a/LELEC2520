@@ -168,8 +168,8 @@ pp.runpp(net,algorithm='nr',init='flat',trafo_model='pi')
 
 print("-------------------------------------------------------")
 print("Q2.1")
-print("vn_lv_kv = {:.3f} kV".format(net.trafo.vn_lv_kv[4]))
-
+print("Rated voltage at low voltage bus [kV] = {:.3f} kV".format(net.trafo.vn_lv_kv[4]))
+print("Load utilization relative to rated power [%] = {:.3f} kV".format(net.res_trafo.loading_percent[4]))
 
 ###############################################################
 #Q2.2 
