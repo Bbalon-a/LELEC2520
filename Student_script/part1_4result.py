@@ -240,7 +240,7 @@ IN4 = VN4 *YC /2 + (VN4 - VN6)/Z
 
 SN6 = 3*VN6*np.conjugate(IN6)
 SN4 = 3*VN4*np.conjugate(IN4)
-print("-------------------------------------------------------")
+"""print("-------------------------------------------------------")
 print("Q1.1")
 print("Theoritical Results:")
 print("Value of R = {:.3f} [\u03A9]".format(R))
@@ -257,12 +257,12 @@ print("Active power of node N4 = {:.3f} MW, Reactive power of node N4 = {:.3f} M
 print("Simulation Results:")
 print("Active power of node N6 = {:.3f} MW, Reactive power of node N6 = {:.3f} MVar".format(net.res_line.p_from_mw[line_num],net.res_line.q_from_mvar[line_num]))
 print("Active power of node N4 = {:.3f} MW, Reactive power of node N4 = {:.3f} MVar".format(net.res_line.p_to_mw[line_num],net.res_line.q_to_mvar[line_num]))
-###############################################################
+"""###############################################################
 #Q2 
 Sloss = SN6+SN4
 Ploss = np.real(Sloss)
 Qloss = np.imag(Sloss)
-print("-------------------------------------------------------")
+"""print("-------------------------------------------------------")
 print("Q1.2")
 print("Theoritical Results:")
 print("Resistive losses = {:.3f} MW".format(Ploss/10**6))
@@ -270,15 +270,15 @@ print("Reactive losses = {:.3f} MVar".format(Qloss/10**6))
 print("Simulation Results:")
 print("Resistive losses = {:.3f} MW".format(net.res_line.pl_mw[line_num]))
 print("Reactive losses = {:.3f} MVar".format(net.res_line.ql_mvar[line_num]))
-###############################################################
+"""###############################################################
 #Q3 
 Zc = np.sqrt(Z/YC)
 Sn = Vg**2/ np.conjugate(Zc)
-print("-------------------------------------------------------")
+"""print("-------------------------------------------------------")
 print("Q1.3")
 print("The surge impedance Z_c = {:.3f} < {:.3f}\u03A9".format(abs(Zc),np.angle(Zc)*180/np.pi))
 print("The surge impedance loading = {:.3f} < {:.3f}° MVA".format(np.abs(Sn)/10**6,np.angle(Sn)*180/np.pi))
-###############################################################
+"""###############################################################
 #Q4 
 
 IN6_max = np.abs(Sn) /(np.abs(VN6))
@@ -290,118 +290,3 @@ print("-------------------------------------------------------")
 print("Q1.4")
 print("Maximum current from N6 = {:.3f} [A], ratio IN6/IN6_max = {:.2f}%".format(IN6_max,percentageI6*100))
 print("Maximum current from N4 = {:.3f} [A], ratio IN4/IN4_max = {:.2f}%".format(IN4_max,percentageI4*100))
-###############################################################
-#Q5
-"""
-res_trafo et res_bus pour kv et angle sont les mêmes 
-"""
-St_nom = net.trafo.sn_mva[trafo_num]*10**6 
-
-z = net.trafo.vk_percent[trafo_num]/100 * Snom/St_nom
-
-rk = net.trafo.vkr_percent[trafo_num] /100 * Snom/St_nom
-xk = np.sqrt(z**2 - rk**2)
-Zk = rk + 1.j *xk 
-n = 1 + (net.trafo.tap_pos[trafo_num]-net.trafo.tap_neutral[trafo_num])* net.trafo.tap_step_percent[trafo_num]/100
-
-VHphase = np.cos(net.res_trafo.va_hv_degree[trafo_num]/180*np.pi) + 1.j * np.sin(net.res_trafo.va_hv_degree[trafo_num]/180*np.pi)
-VLphase = np.cos(net.res_trafo.va_lv_degree[trafo_num]/180*np.pi) + 1.j * np.sin(net.res_trafo.va_lv_degree[trafo_num]/180*np.pi)
-VHmagpu = net.res_trafo.vm_hv_pu[trafo_num]
-VLmagpu = net.res_trafo.vm_lv_pu[trafo_num]
-
-VHpu = VHmagpu * VHphase
-VLpu = VLmagpu * VLphase
-
-VL0pu = VHpu/n
-ILpu = (VLpu - VL0pu)/Zk * Snom/St_nom
-IHpu = - ILpu /n 
-
-SHV = VHpu  * np.conjugate(IHpu) * St_nom
-SLV = VLpu * np.conjugate(ILpu) * St_nom
-print("-------------------------------------------------------")
-print("Q1.5")
-print("Theoritical Results:")
-print("zk = {:.3f} [p.u]".format(z))
-print("rk = {:.3f} *10^-3[p.u.]".format(rk*10**3))
-print("xk = {:.3f} [p.u.]".format(xk))
-print("n = {:.2f} [p.u.]".format(n))
-print("Zk = {:.3f} < {:.3f} [p.u.]".format(np.abs(Zk),np.angle(Zk)*180/np.pi))
-print("Voltage at N5 = {:.3f} < {:.3f} [p.u.]".format(np.abs(VHpu),np.angle(VHpu)*180/np.pi))
-print("Voltage at N106 = {:.3f} < {:.3f} [p.u.]".format(np.abs(VLpu),np.angle(VLpu)/np.pi*180))
-print("Voltage at N106,0 = {:.3f} < {:.3f} [p.u.]".format(np.abs(VL0pu),np.angle(VL0pu)/np.pi*180))
-print("Current at N5 = {:.3f} < {:.3f} [p.u.]".format(np.abs(IHpu), np.angle(IHpu)/np.pi*180))
-print("Current at N106 = {:.3f} < {:.3f} [p.u.]".format(np.abs(ILpu), np.angle(ILpu)/np.pi*180))
-print("Power of N5 = {:.3f} [MVA]".format(SHV/10**6))
-print("Power of N106 = {:.3f} [MVA]".format(SLV/10**6))
-print("Simulation")
-print("Power of N5 = {:.3f} + {:.3f}j [MVA]".format(net.res_trafo.p_hv_mw[trafo_num],net.res_trafo.q_hv_mvar[trafo_num]))
-print("Power of N106 = {:.3f} + {:.3f}j [MVA]".format(net.res_trafo.p_lv_mw[trafo_num],net.res_trafo.q_lv_mvar[trafo_num]))
-
-###############################################################
-#Q6
-print("-------------------------------------------------------")
-print(("Q1.6"))
-print("Theoritical Results:")
-Sloss = SHV+SLV
-print("Sloss = {:.3f} [MVA]".format(Sloss/10**6))
-print("P_loss = {:.3f} [MW]".format(np.real(Sloss)/10**6))
-print("Q_loss = {:.3f} [MVAr]".format(np.imag(Sloss)/10**6))
-print("Simulation Results:")
-print("P_loss = {:.3f} [MW]".format(net.res_trafo.pl_mw[trafo_num]))
-print("Q_loss = {:.3f} [MVAr]".format(net.res_trafo.ql_mvar[trafo_num]))
-
-###############################################################
-#Q7
-print("-------------------------------------------------------")
-print(("Q1.7"))
-print("Theoritical Results:")
-IB5 = St_nom /(np.sqrt(3)*net.trafo.vn_hv_kv[trafo_num]*10**3)
-IB107 = St_nom /(np.sqrt(3)*net.trafo.vn_lv_kv[trafo_num]*10**3)
-IH = IB5 * IHpu
-IL = IB107 * ILpu
-print("Current at N5 = {:.3f} [A]".format(np.abs(IH)))
-print("Current at N107 = {:.3f} [A]".format(np.abs(IL)))
-
-loadH = np.sqrt(3)*np.abs(IH)*380000/St_nom *100
-loadL = np.sqrt(3)* np.abs(IL)*150000/St_nom *100
-
-
-print("Transformater load = {:.3f} [%]".format(max(loadH, loadL)))
-print("Simulation Results:")
-print("Current at N5 = {:.3f} [kA]".format(net.res_trafo.i_hv_ka[trafo_num]))
-print("Current at N107 = {:.3f} [kA]".format(net.res_trafo.i_lv_ka[trafo_num]))
-print("Transformater load = {:.3f} [%]".format(net.res_trafo.loading_percent[trafo_num]))
-
-###############################################################
-#Q8 
-
-import math
-shunt_num =11
-load_num =12
-QNshunt = net.shunt.q_mvar[shunt_num] *10**6
-
-
-U204pu = net.res_bus.vm_pu[22]
-Qshunt = U204pu**2 * QNshunt
-
-Pload = net.load.p_mw[load_num] *10**6
-Qload = net.load.q_mvar[load_num] *10**6
-fpwithoutshunt = np.cos(math.atan(Qload/Pload))
-
-fpwithshunt =  np.cos(math.atan((Qload+Qshunt)/Pload))
-
-Qshuntsimu = net.res_shunt.q_mvar[shunt_num] *10**6
-fpwithshuntsimu =  np.cos(math.atan((Qload+Qshuntsimu)/Pload))
-
-print("-------------------------------------------------------")
-print("Q1.8")
-print("Theoritical results:")
-print("Without shunt compensation:")
-print("Q_shunt = 0 [MVAr], fp = {:.3f}".format(fpwithoutshunt))
-print("With shunt compensation:")
-print("Q_shunt = {:.3f} [MVAr], fp = {:.3f}".format(Qshunt/10**6, fpwithshunt))
-print("Simulation results:")
-print("Without shunt compensation:")
-print("Q_shunt = 0 [MVAr], fp = {:.3f}".format(fpwithoutshunt))
-print("With shunt compensation:")
-print("Q_shunt = {:.3f} [MVAr], fp = {:.3f}".format(Qshuntsimu/10**6,fpwithshuntsimu))

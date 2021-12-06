@@ -252,13 +252,15 @@ print("Current at N6 = {:.3f} < {:.3f}° [A]".format(np.abs(IN6),np.angle(IN6)*1
 print("Current at N4 = {:.3f} < {:.3f}° [A]".format(np.abs(IN4),np.angle(IN4)*180/np.pi))
 print("Power at N6 = {:.3f} [MVA]".format(SN6/10**6))
 print("Power at N4 = {:.3f} [MVA]".format(SN4/10**6))
-print("Active power of node N6 = {:.3f} MW, Reactive power of node N6 = {:.3f} MVar".format(np.real(SN6)/10**6,np.imag(SN6)/10**6))
-print("Active power of node N4 = {:.3f} MW, Reactive power of node N4 = {:.3f} MVar".format(np.real(SN4)/10**6,np.imag(SN4)/10**6))
+print("Active power of node N6 = {:.3f} [MW], Reactive power of node N6 = {:.3f} [MVar]".format(np.real(SN6)/10**6,np.imag(SN6)/10**6))
+print("Active power of node N4 = {:.3f} [MW], Reactive power of node N4 = {:.3f} [MVar]".format(np.real(SN4)/10**6,np.imag(SN4)/10**6))
+print()
 print("Simulation Results:")
-print("Active power of node N6 = {:.3f} MW, Reactive power of node N6 = {:.3f} MVar".format(net.res_line.p_from_mw[line_num],net.res_line.q_from_mvar[line_num]))
-print("Active power of node N4 = {:.3f} MW, Reactive power of node N4 = {:.3f} MVar".format(net.res_line.p_to_mw[line_num],net.res_line.q_to_mvar[line_num]))
+print("Active power of node N6 = {:.3f} [MW], Reactive power of node N6 = {:.3f} [MVar]".format(net.res_line.p_from_mw[line_num],net.res_line.q_from_mvar[line_num]))
+print("Active power of node N4 = {:.3f} [MW], Reactive power of node N4 = {:.3f} [MVar]".format(net.res_line.p_to_mw[line_num],net.res_line.q_to_mvar[line_num]))
 ###############################################################
 #Q2 
+"""
 Sloss = SN6+SN4
 Ploss = np.real(Sloss)
 Qloss = np.imag(Sloss)
@@ -292,9 +294,9 @@ print("Maximum current from N6 = {:.3f} [A], ratio IN6/IN6_max = {:.2f}%".format
 print("Maximum current from N4 = {:.3f} [A], ratio IN4/IN4_max = {:.2f}%".format(IN4_max,percentageI4*100))
 ###############################################################
 #Q5
-"""
-res_trafo et res_bus pour kv et angle sont les mêmes 
-"""
+
+#res_trafo et res_bus pour kv et angle sont les mêmes 
+
 St_nom = net.trafo.sn_mva[trafo_num]*10**6 
 
 z = net.trafo.vk_percent[trafo_num]/100 * Snom/St_nom
@@ -370,12 +372,12 @@ print("Transformater load = {:.3f} [%]".format(max(loadH, loadL)))
 print("Simulation Results:")
 print("Current at N5 = {:.3f} [kA]".format(net.res_trafo.i_hv_ka[trafo_num]))
 print("Current at N107 = {:.3f} [kA]".format(net.res_trafo.i_lv_ka[trafo_num]))
+print("Load = {:.3f} [%]".format(max(loadH, loadL)))
 print("Transformater load = {:.3f} [%]".format(net.res_trafo.loading_percent[trafo_num]))
 
 ###############################################################
 #Q8 
 
-import math
 shunt_num =11
 load_num =12
 QNshunt = net.shunt.q_mvar[shunt_num] *10**6
@@ -386,22 +388,20 @@ Qshunt = U204pu**2 * QNshunt
 
 Pload = net.load.p_mw[load_num] *10**6
 Qload = net.load.q_mvar[load_num] *10**6
-fpwithoutshunt = np.cos(math.atan(Qload/Pload))
+fpwithoutshunt = Pload /np.sqrt(Pload**2 +Qload*2)
 
-fpwithshunt =  np.cos(math.atan((Qload+Qshunt)/Pload))
+
+fpwithshunt = Pload/(np.sqrt(Pload**2 +(Qload-Qshunt)**2))
 
 Qshuntsimu = net.res_shunt.q_mvar[shunt_num] *10**6
-fpwithshuntsimu =  np.cos(math.atan((Qload+Qshuntsimu)/Pload))
-
+fpwithshuntsimu = Pload/(np.sqrt(Pload**2 +(Qload-Qshuntsimu)**2))
 print("-------------------------------------------------------")
 print("Q1.8")
+print("Without shunt compensation")
+print("Q_shunt = 0, fp = {:.3f}".format(fpwithoutshunt))
+print("With shunt compensation")
 print("Theoritical results:")
-print("Without shunt compensation:")
-print("Q_shunt = 0 [MVAr], fp = {:.3f}".format(fpwithoutshunt))
-print("With shunt compensation:")
-print("Q_shunt = {:.3f} [MVAr], fp = {:.3f}".format(Qshunt/10**6, fpwithshunt))
+print("Q_shunt = {:.3f} MVAr, fp = {:.3f}".format(Qshunt/10**6,fpwithshunt))
 print("Simulation results:")
-print("Without shunt compensation:")
-print("Q_shunt = 0 [MVAr], fp = {:.3f}".format(fpwithoutshunt))
-print("With shunt compensation:")
-print("Q_shunt = {:.3f} [MVAr], fp = {:.3f}".format(Qshuntsimu/10**6,fpwithshuntsimu))
+print("Q_shunt = {:.3f} MVAr, fp = {:.3f}".format(Qshuntsimu/10**6,fpwithshuntsimu))
+"""
