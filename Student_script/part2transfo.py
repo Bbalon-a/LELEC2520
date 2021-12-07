@@ -108,7 +108,7 @@ pp.create_line_from_parameters(net, from_bus= N13, to_bus= N14, name="'N13N14", 
 pp.create_line_from_parameters(net, from_bus= N11, to_bus= N12, name="'N11N12", length_km=1, r_ohm_per_km=1.819, x_ohm_per_km=19.22, max_i_ka=2.051113, c_nf_per_km=597.384895796567, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(0,-4),(0,-3)])
 
 # list of Transformers:
-pp.create_transformer_from_parameters(net, hv_bus=N2, lv_bus=N107, sn_mva=550.0, name='N2N107', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.312, vk_percent=22.72114224681497, pfe_kw=0, i0_percent=0.0, tap_min=-20, tap_max=20, tap_step_percent=1, tap_pos=8,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
+pp.create_transformer_from_parameters(net, hv_bus=N2, lv_bus=N107, sn_mva=550.0, name='N2N107', shift_degree=-10.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.312, vk_percent=22.72114224681497, pfe_kw=0, i0_percent=0.0, tap_min=-20, tap_max=20, tap_step_percent=1, tap_pos=8,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 
 pp.create_transformer_from_parameters(net, hv_bus=N3, lv_bus=N101, sn_mva=550.0, name='N3N101', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.26, vk_percent=22.621494203522456, pfe_kw=0, i0_percent=0.0, tap_min=3, tap_max=3, tap_step_percent=1, tap_pos=3,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N7, lv_bus=N105, sn_mva=550.0, name='N7N105', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.26, vk_percent=22.621494203522456, pfe_kw=0, i0_percent=0.0, tap_min=7, tap_max=7, tap_step_percent=1, tap_pos=7,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
@@ -211,11 +211,13 @@ print("vn_lv_kv = {:.3f} kV".format(net.trafo.vn_lv_kv[0]))
 print("vn_kv on the high voltage side = {:.3f} kV".format(net.bus.vn_kv[N2]))
 print("vn_kv on the low voltage side = {:.3f} kV".format(net.bus.vn_kv[N107]))
 print("tap_pos  = {:.3f}".format(net.trafo.tap_pos[0]))
+print("Transformer phase shift angle  = {:.3f} degrees".format(net.trafo.shift_degree[0]))
 
 print(net.res_trafo.p_hv_mw[0])
 print(net.res_trafo.q_hv_mvar[0])
 print(net.res_trafo.pl_mw[0])
 print(net.res_trafo.ql_mvar[0])
+
 
 ###############################################################
 
