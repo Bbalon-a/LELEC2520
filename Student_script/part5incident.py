@@ -160,8 +160,10 @@ ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,17, 1.01,1.021, or
 ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,18, 1.01,1.021, order = 0)#, in_service = True)
 
 # code here
-#ct.run_control(net)
-pp.runpp(net,algorithm='nr',enforce_q_lims=True,max_iteration=2000, run_control=True) #pour utiliser les controllers
+ct.run_control(net)
+pp.runpp(net,algorithm='nr',enforce_q_lims=True,max_iteration=2000)#, run_control=True) #pour utiliser les controllers, fonctionne uniquement si chaque calcule converge 
+
+# /!\ Do not forget to take the reactive power limits of the generator into account : max_q_mvar & min_q_mvar
 
 #, initrafo_model='pi'
 
