@@ -217,7 +217,6 @@ print(net.res_trafo.q_hv_mvar[0])
 print(net.res_trafo.pl_mw[0])
 print(net.res_trafo.ql_mvar[0])
 
-
 ###############################################################
 
 
