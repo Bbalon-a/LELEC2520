@@ -86,7 +86,7 @@ pp.create_shunt(net, bus=N204, q_mvar=-45.0, in_service=True)
 
 # list of Lines
 pp.create_line_from_parameters(net, from_bus= N11, to_bus= N10, name="'N11N10", length_km=1, r_ohm_per_km=1.141, x_ohm_per_km=12.086, max_i_ka=2.157467, c_nf_per_km=434.703079165756, in_service=True,max_loading_percent = load_max , controllable = True, geodata = [(0,-4),(1,-4)])
-pp.create_line_from_parameters(net, from_bus= N6, to_bus= N8, name="'N6N8", length_km=1, r_ohm_per_km=1.444, x_ohm_per_km=14.44, max_i_ka=2.157467, c_nf_per_km=537.867313277922, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(0.5,-3)])
+pp.create_line_from_parameters(net, from_bus= N6, to_bus= N8, name="'N6N8", length_km=1, r_ohm_per_km=1.444, x_ohm_per_km=14.44, max_i_ka=2.157467, c_nf_per_km=537.867313277922, in_service=False,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(0.5,-3)])
 pp.create_line_from_parameters(net, from_bus= N6, to_bus= N9, name="'N6N9", length_km=1, r_ohm_per_km=1.357, x_ohm_per_km=14.368, max_i_ka=2.157467, c_nf_per_km=538.306580920856, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(1,-3)])
 pp.create_line_from_parameters(net, from_bus= N6, to_bus= N4, name="'N6N4", length_km=1, r_ohm_per_km=1.213, x_ohm_per_km=10.224, max_i_ka=2.157467, c_nf_per_km=380.915074598419, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(1.5,1.5),(2.5,2)])
 pp.create_line_from_parameters(net, from_bus= N6, to_bus= N7, name="'N6N7", length_km=1, r_ohm_per_km=1.213, x_ohm_per_km=10.224, max_i_ka=2.157467, c_nf_per_km=380.915074598419, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(1.5,-1),(4.5,-1)])
@@ -177,8 +177,8 @@ pf_res_plotly(net, aspectratio=(1,1));
 #print tension to see if we take into account the controllers properly
 #print(net.res_trafo.vm_lv_pu)
 
-print(net.line.name)
-print(net.trafo.name)
+#print(net.line.name)
+#print(net.trafo.name)
 
 ###############################################################
 #Q2.1 
@@ -187,10 +187,10 @@ print("-------------------------------------------------------")
 print("Q5.1")
 #print(net.res_line.p_to_mw)
 #print(net.res_trafo.p_lv_mw)
-print(net.res_gen.p_mw)
-print(net.res_gen.q_mvar)
-print(net.res_line.loading_percent)
-print(net.res_trafo.loading_percent)
+#print(net.res_gen.p_mw)
+#print(net.res_gen.q_mvar)
+#print(net.res_line.loading_percent)
+#print(net.res_trafo.loading_percent)
 
 ###############################################################
 #Q2.2 
@@ -199,6 +199,10 @@ print("-------------------------------------------------------")
 print("Q5.2")
 #print(net.res_line.p_to_mw)
 #print(net.res_trafo.p_lv_mw)
+#print(net.res_gen.p_mw)
+#print(net.res_gen.q_mvar)
+#print(net.res_line.loading_percent)
+#print(net.res_trafo.loading_percent)
 
 ###############################################################
 #Q2.3 
@@ -207,6 +211,10 @@ print("-------------------------------------------------------")
 print("Q5.3")
 #print(net.res_line.p_to_mw)
 #print(net.res_trafo.p_lv_mw)
+#print(net.res_gen.p_mw)
+#print(net.res_gen.q_mvar)
+#print(net.res_line.loading_percent)
+#print(net.res_trafo.loading_percent)
 
 ###############################################################
 #Q2.4 
