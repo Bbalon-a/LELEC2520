@@ -171,7 +171,8 @@ print("The active power of each generator in [MW]")
 print(net.res_gen.p_mw)
 print("The reactive power of each generator in [MVAr]")
 print(net.res_gen.q_mvar)
-
+print("The active power of the low voltage side transformers in [MW]")
+print(net.res_trafo.p_lv_mw)
 
 sumpload = 0 
 sumqload = 0
