@@ -110,7 +110,8 @@ pp.create_line_from_parameters(net, from_bus= N13, to_bus= N14, name="'N13N14", 
 pp.create_line_from_parameters(net, from_bus= N11, to_bus= N12, name="'N11N12", length_km=1, r_ohm_per_km=1.819, x_ohm_per_km=19.22, max_i_ka=2.051113, c_nf_per_km=597.384895796567, in_service=True,max_loading_percent = load_max, controllable = True, geodata = [(0,-4),(0,-3)])
 
 # list of Transformers:
-pp.create_transformer_from_parameters(net, hv_bus=N2, lv_bus=N107, sn_mva=550.0, name='N2N107', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.312, vk_percent=22.72114224681497, pfe_kw=0, i0_percent=0.0, tap_min=8, tap_max=8, tap_step_percent=1, tap_pos=8,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
+pp.create_transformer_from_parameters(net, hv_bus=N2, lv_bus=N107, sn_mva=550.0, name='N2N107', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.312, vk_percent=22.72114224681497, pfe_kw=0, i0_percent=0.0, tap_min=8, tap_max=8, tap_step_percent=1, tap_pos=8,tap_neutral=0, tap_side="hv", in_service=False,max_loading_percent = load_max)
+
 pp.create_transformer_from_parameters(net, hv_bus=N3, lv_bus=N101, sn_mva=550.0, name='N3N101', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.26, vk_percent=22.621494203522456, pfe_kw=0, i0_percent=0.0, tap_min=3, tap_max=3, tap_step_percent=1, tap_pos=3,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N7, lv_bus=N105, sn_mva=550.0, name='N7N105', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.26, vk_percent=22.621494203522456, pfe_kw=0, i0_percent=0.0, tap_min=7, tap_max=7, tap_step_percent=1, tap_pos=7,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
 pp.create_transformer_from_parameters(net, hv_bus=N4, lv_bus=N102, sn_mva=550.0, name='N4N102', shift_degree=0.0, vn_hv_kv=380.0, vn_lv_kv=150.0, vkr_percent=0.416, vk_percent=24.542525888750735, pfe_kw=0, i0_percent=0.0, tap_min=14, tap_max=14, tap_step_percent=1, tap_pos=14,tap_neutral=0, tap_side="hv", in_service=True,max_loading_percent = load_max)
@@ -157,7 +158,7 @@ ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,17, 1.01,1.021, or
 ct.controller.trafo.DiscreteTapControl.DiscreteTapControl(net,18, 1.01,1.021, order = 0)#, in_service = True)
 
 # code here
-ct.run_control(net)
+#ct.run_control(net)
 pp.runpp(net,algorithm='nr',enforce_q_lims=True,max_iteration=2000) #, run_control=True) #pour utiliser les controllers, fonctionne uniquement si chaque calcul converge ce qui n'est pas le cas -> pandapower.powerflow.LoadflowNotConverged: Power Flow nr did not converge after 2000 iterations! 
 
 # /!\ Do not forget to take the reactive power limits of the generator into account : max_q_mvar & min_q_mvar
@@ -221,8 +222,12 @@ print("Q5.3")
 
 print("-------------------------------------------------------")
 print("Q5.4")
-#print(net.res_line.p_to_mw)
-#print(net.res_trafo.p_lv_mw)
+print(net.res_line.p_to_mw)
+print(net.res_trafo.p_lv_mw)
+print(net.res_gen.p_mw)
+print(net.res_gen.q_mvar)
+print(net.res_line.loading_percent)
+print(net.res_trafo.loading_percent)
 
 ###############################################################
 
