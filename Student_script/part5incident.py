@@ -222,12 +222,12 @@ print("Q5.3")
 
 print("-------------------------------------------------------")
 print("Q5.4")
-print(net.res_line.p_to_mw)
-print(net.res_trafo.p_lv_mw)
-print(net.res_gen.p_mw)
-print(net.res_gen.q_mvar)
-print(net.res_line.loading_percent)
-print(net.res_trafo.loading_percent)
+#print(net.res_line.p_to_mw)
+#print(net.res_trafo.p_lv_mw)
+#print(net.res_gen.p_mw)
+#print(net.res_gen.q_mvar)
+#print(net.res_line.loading_percent)
+#print(net.res_trafo.loading_percent)
 
 ###############################################################
 
